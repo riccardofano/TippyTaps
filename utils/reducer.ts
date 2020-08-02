@@ -7,6 +7,17 @@ export const reducer = (draft: IState, action: Actions): IState => {
       if (draft.text.length === draft.currentPosition) return draft;
 
       const key = action.payload;
+      // User is trying to correct an error, go back in position
+      if (key === "Backspace" || key === "Delete") {
+        draft.currentPosition > 0 ? (draft.currentPosition -= 1) : 0;
+        if (
+          draft.currentLine > 0 &&
+          draft.currentPosition + 1 === draft.lineLengths[draft.currentLine - 1]
+        ) {
+          draft.currentLine -= 1;
+        }
+        return draft;
+      }
 
       // Is the key correct?
       if (key === draft.text[draft.currentPosition]) {
