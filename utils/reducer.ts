@@ -19,6 +19,12 @@ export const reducer = (draft: IState, action: Actions): IState => {
         return draft;
       }
 
+      // Start the time!
+      if (!draft.started) {
+        draft.started = true;
+        draft.startTime = Date.now();
+      }
+
       // Is the key correct?
       if (key === draft.text[draft.currentPosition]) {
         draft.characters[draft.currentPosition].correct = true;
@@ -27,6 +33,7 @@ export const reducer = (draft: IState, action: Actions): IState => {
         draft.characters[draft.currentPosition].wasIncorrect = true;
       }
 
+      draft.totalKeyPresses += 1;
       draft.currentPosition += 1;
       return draft;
     }

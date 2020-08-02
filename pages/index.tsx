@@ -4,9 +4,10 @@ import { useImmerReducer } from "use-immer";
 import { reducer } from "../utils/reducer";
 import { initializeState } from "../utils/text";
 import { keyHandler } from "../utils/keyHandles";
+import { StateContext } from "../utils/types";
 
 import Character from "../components/Character";
-import { StateContext } from "../utils/types";
+import Result from "../components/Result";
 
 const { initialState, lines } = initializeState(
   "This is long text, or at least long enough to have multiple lines",
@@ -41,6 +42,7 @@ export default function Home() {
             ))}
           </div>
         ))}
+        <Result />
       </StateContext.Provider>
     </div>
   );
