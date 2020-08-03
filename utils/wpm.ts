@@ -6,7 +6,6 @@ export const calculateAccuracy = (chars: ICharacter[], length: number) => {
   }, 0);
 
   const accuracy = (length - totalIncorrect) / length;
-
   return Math.round(accuracy * 100);
 };
 

@@ -35,6 +35,18 @@ export const reducer = (draft: IState, action: Actions): IState => {
 
       draft.totalKeyPresses += 1;
       draft.currentPosition += 1;
+
+      // Scroll down to the next line
+      // if the next position is the length of the current line + 1
+      // and if it's not the last 2 lines
+      if (
+        draft.currentPosition + 1 ===
+          draft.lineLengths[draft.currentLine] + 1 &&
+        draft.currentLine + 2 !== draft.lineLengths.length
+      ) {
+        draft.currentLine += 1;
+      }
+
       return draft;
     }
     default: {

@@ -10,7 +10,7 @@ import Character from "../components/Character";
 import Result from "../components/Result";
 
 const { initialState, lines } = initializeState(
-  "This is long text, or at least long enough to have multiple lines",
+  "This is a long text, or at least long enough to have multiple lines. I still need more lines so let's add some more characters, having at least five lines would be exquisite",
   30
 );
 
@@ -28,20 +28,34 @@ export default function Home() {
     };
   });
 
+  // This determines when the line should start and stop scrolling
+  const lineOffset = 1;
+
   return (
     <div>
       <StateContext.Provider value={state}>
-        {lines.map((l, i) => (
-          <div key={i}>
-            {l.map((c) => (
-              <Character
-                key={c.position}
-                value={c.value}
-                position={c.position}
-              />
+        <div style={{ overflow: "hidden", height: "100px" }}>
+          <div
+            style={{
+              marginTop:
+                state.currentLine > lineOffset
+                  ? `-${(state.currentLine - lineOffset) * 20}px`
+                  : "0",
+            }}
+          >
+            {lines.map((l, i) => (
+              <div key={i}>
+                {l.map((c) => (
+                  <Character
+                    key={c.position}
+                    value={c.value}
+                    position={c.position}
+                  />
+                ))}
+              </div>
             ))}
           </div>
-        ))}
+        </div>
         <Result />
       </StateContext.Provider>
     </div>
