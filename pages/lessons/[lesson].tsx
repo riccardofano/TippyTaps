@@ -33,7 +33,7 @@ export async function getStaticProps({ params }: Params) {
   if (!lessonSnap.exists || !lessonSnap.data()) {
     return { props: { lesson: null } };
   }
-  const lesson = await lessonSnap.data();
+  const lesson = lessonSnap.data();
 
   // TODO: have might have to divide the lines and the state initilization
   // so I can change the line length on media query change without modifying the state
