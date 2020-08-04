@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import cookies from "js-cookie";
-import { useRouter } from "next/router";
 
 import initFirebase from "./init";
 import firebase from "firebase/app";
@@ -12,7 +11,6 @@ initFirebase();
 
 export const useUser = () => {
   const [user, setUser] = useState<User | null>(null);
-  const router = useRouter();
 
   const logout = async () => {
     return firebase
@@ -21,7 +19,6 @@ export const useUser = () => {
       .then(() => {
         cookies.remove("auth");
         setUser(null);
-        router.push("/auth");
       })
       .catch((e) => {
         console.error(e);
