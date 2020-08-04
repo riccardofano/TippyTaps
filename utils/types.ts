@@ -24,5 +24,8 @@ export interface User {
   token: string;
 }
 
+export type AllLessons = firebase.firestore.DocumentData[];
+export type UserLessons = { [key: string]: firebase.firestore.DocumentData };
+
 export type Actions = { type: "keydown"; payload: string };
 export const StateContext = createContext({} as IState);

@@ -1,24 +1,30 @@
 import { useEffect, useState } from "react";
-import { lessonCollection } from "../../utils/db/collections";
+
+import { AllLessons, UserLessons } from "../../utils/types";
+import { getUserLessons, getAllLessons } from "../../utils/db/collections";
+import { useUser } from "../../utils/db/useUser";
 
 export default function Lessons() {
-  const [lessons, setLessons] = useState<firebase.firestore.DocumentData[]>([]);
+  const { user } = useUser();
+  const [lessons, setLessons] = useState<AllLessons>([]);
+  const [userLessons, setUserLessons] = useState<UserLessons>({});
 
   useEffect(() => {
-    let tempLessons: firebase.firestore.DocumentData[] = [];
-    lessonCollection.get().then((snap) => {
-      snap.forEach((doc) => {
-        tempLessons.push(doc.data());
-      });
-      setLessons(tempLessons);
-    });
-  }, []);
+    getAllLessons().then((data) => setLessons(data));
+    if (user) {
+      getUserLessons(user.id).then((data) => setUserLessons(data));
+    }
+  }, [user]);
 
   return (
     <div>
       {lessons &&
         lessons.map((lesson, i) => (
-          <pre key={i}>{JSON.stringify(lesson, null, 4)}</pre>
+          <pre key={i}>
+            {userLessons[lesson.id]
+              ? lesson.id + " played before"
+              : lesson.id + " not played"}
+          </pre>
         ))}
     </div>
   );
