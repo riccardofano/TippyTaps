@@ -24,8 +24,17 @@ export interface User {
   token: string;
 }
 
+export interface IUserContext {
+  user: User | null;
+  logout: () => Promise<void>;
+}
+
 export type AllLessons = firebase.firestore.DocumentData[];
 export type UserLessons = { [key: string]: firebase.firestore.DocumentData };
 
 export type Actions = { type: "keydown"; payload: string };
 export const StateContext = createContext({} as IState);
+export const UserContext = createContext({
+  user: null,
+  logout: () => {},
+} as IUserContext);
