@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { useImmerReducer } from "use-immer";
 
-import { StateContext, IState, ICharacter } from "../utils/types";
+import { StateContext, IState, ICharacter, LessonInfo } from "../utils/types";
 import { keyHandler } from "../utils/keyHandler";
 import { reducer } from "../utils/reducer";
 
@@ -9,11 +9,16 @@ import Character from "../components/Character";
 import Result from "../components/Result";
 
 interface LessonGameProps {
+  info: LessonInfo;
   initialState: IState;
   lines: ICharacter[][];
 }
 
-export default function LessonGame({ initialState, lines }: LessonGameProps) {
+export default function LessonGame({
+  info,
+  initialState,
+  lines,
+}: LessonGameProps) {
   const [state, dispatch] = useImmerReducer(reducer, initialState);
 
   const handler = useCallback((e) => {
@@ -55,7 +60,7 @@ export default function LessonGame({ initialState, lines }: LessonGameProps) {
             ))}
           </div>
         </div>
-        <Result />
+        <Result {...info} />
       </StateContext.Provider>
     </div>
   );

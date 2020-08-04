@@ -18,6 +18,22 @@ export interface IState {
   started: boolean;
 }
 
+export interface LessonInfo {
+  id: string;
+  text: string;
+  requirements: {
+    wpm: number;
+    accuracy: number;
+    realAccuracy: number;
+  };
+}
+
+export interface IScore {
+  wpm: number;
+  accuracy: number;
+  realAccuracy: number;
+}
+
 export interface User {
   id: string;
   email: string;
@@ -29,7 +45,7 @@ export interface IUserContext {
   logout: () => Promise<void>;
 }
 
-export type AllLessons = firebase.firestore.DocumentData[];
+export type AllLessons = LessonInfo[];
 export type UserLessons = { [key: string]: firebase.firestore.DocumentData };
 
 export type Actions = { type: "keydown"; payload: string };

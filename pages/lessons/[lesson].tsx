@@ -2,17 +2,21 @@ import { lessonCollection } from "../../utils/db/collections";
 import { initializeState } from "../../utils/text";
 
 import LessonGame from "../../components/LessonGame";
+import Layout from "../../components/Layout";
+import { LessonInfo, IState, ICharacter } from "../../utils/types";
 
 interface LessonProps {
-  lesson: firebase.firestore.DocumentData;
+  info: LessonInfo;
+  initialState: IState;
+  lines: ICharacter[][];
 }
 type Params = { params: { lesson: string } };
 
-export default function Lesson({ lesson }: LessonProps) {
+export default function Lesson({ info, initialState, lines }: LessonProps) {
   return (
-    <div>
-      <LessonGame initialState={lesson.initialState} lines={lesson.lines} />
-    </div>
+    <Layout url="/lessons/tallestBuilding">
+      <LessonGame initialState={initialState} lines={lines} info={info} />
+    </Layout>
   );
 }
 
@@ -33,11 +37,12 @@ export async function getStaticProps({ params }: Params) {
   if (!lessonSnap.exists || !lessonSnap.data()) {
     return { props: { lesson: null } };
   }
-  const lesson = lessonSnap.data();
+  const { id, requirements, text } = lessonSnap.data() as LessonInfo;
+  const info = { id, text, requirements };
 
   // TODO: have might have to divide the lines and the state initilization
   // so I can change the line length on media query change without modifying the state
-  const { initialState, lines } = initializeState(lesson!.text, 30);
+  const { initialState, lines } = initializeState(text, 30);
 
-  return { props: { lesson: { initialState, lines } } };
+  return { props: { info, initialState, lines } };
 }

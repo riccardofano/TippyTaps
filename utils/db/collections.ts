@@ -2,7 +2,7 @@ import initFirebase from "./init";
 import firebase from "firebase/app";
 import "firebase/firestore";
 
-import { AllLessons, UserLessons } from "../types";
+import { AllLessons, UserLessons, IScore } from "../types";
 
 initFirebase();
 
@@ -33,4 +33,30 @@ export const getUserLessons = async (userId: string) => {
     .catch((e) => console.error(e));
 
   return visitedLessons;
+};
+
+const addToArray = (
+  ref: firebase.firestore.DocumentReference,
+  key: string,
+  value: any
+) => {
+  ref.update({
+    [key]: firebase.firestore.FieldValue.arrayUnion(value),
+  });
+};
+
+export const addScore = (userId: string, lessonId: string, score: IScore) => {
+  userCollection
+    .doc(userId)
+    .collection("lessons")
+    .doc(lessonId)
+    .get()
+    .then((snap) => {
+      if (snap.exists) {
+        addToArray(snap.ref, "scores", score);
+      } else {
+        snap.ref.set({ score });
+      }
+    })
+    .catch((error) => console.error(error));
 };
