@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { firebaseAuthConfig, firebaseAuth } from "../utils/db/auth";
 
-export default function FirebaseAuth() {
+interface FirebaseAuthProps {
+  url?: string;
+}
+
+export default function FirebaseAuth({ url }: FirebaseAuthProps) {
   const [renderAuth, setRenderAuth] = useState(false);
 
   useEffect(() => {
@@ -15,7 +19,7 @@ export default function FirebaseAuth() {
     <div>
       {renderAuth && (
         <StyledFirebaseAuth
-          uiConfig={firebaseAuthConfig}
+          uiConfig={firebaseAuthConfig(url)}
           firebaseAuth={firebaseAuth}
         />
       )}

@@ -1,8 +1,17 @@
+import { useState, useEffect } from "react";
+
 import FirebaseAuth from "../components/FirebaseAuth";
 import { useUser } from "../utils/db/useUser";
 
 export default function Auth() {
   const { user, logout } = useUser();
+  const [url, setUrl] = useState<string | undefined>();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setUrl(window.location.pathname);
+    }
+  }, []);
 
   return (
     <>
@@ -14,7 +23,7 @@ export default function Auth() {
       ) : (
         <div>
           <p>Sign in</p>
-          <FirebaseAuth />
+          <FirebaseAuth url={url} />
         </div>
       )}
     </>
