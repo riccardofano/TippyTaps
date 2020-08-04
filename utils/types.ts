@@ -18,5 +18,11 @@ export interface IState {
   started: boolean;
 }
 
+export interface User {
+  id: string;
+  email: string;
+  token: string;
+}
+
 export type Actions = { type: "keydown"; payload: string };
 export const StateContext = createContext({} as IState);

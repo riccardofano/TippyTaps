@@ -6,10 +6,12 @@ import initFirebase from "./init";
 import firebase from "firebase/app";
 import "firebase/auth";
 
+import { User } from "../types";
+
 initFirebase();
 
 export const useUser = () => {
-  const [user, setUser] = useState<firebase.User | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
   const logout = async () => {
