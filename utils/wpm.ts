@@ -27,3 +27,21 @@ export const calculateWpm = (startTime: number, totalKeyPresses: number) => {
 
   return Math.round(wpm);
 };
+
+type Stats = {
+  wpm: number;
+  accuracy: number;
+  realAccuracy: number;
+};
+
+export const calculateProgress = (requirements: Stats, score: Stats) => {
+  const wpmPercent = score.wpm / requirements.wpm;
+  const accuracyPercent = score.accuracy / requirements.accuracy;
+  const realAccuracyPercent = score.realAccuracy / requirements.realAccuracy;
+
+  const percent = Math.round(
+    wpmPercent * accuracyPercent * realAccuracyPercent * 100
+  );
+
+  return percent > 100 ? 100 : percent;
+};

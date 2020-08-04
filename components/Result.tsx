@@ -4,6 +4,7 @@ import {
   calculateWpm,
   calculateAccuracy,
   calculateRealAccuracy,
+  calculateProgress,
 } from "../utils/wpm";
 import { addScore } from "../utils/db/collections";
 
@@ -40,6 +41,14 @@ export default function Result({ id, text, requirements }: LessonInfo) {
           <p>words per minute: {calculateWpm(startTime, totalKeyPresses)}</p>
           <p>accuracy: {calculateAccuracy(characters, text.length)}</p>
           <p>real accuracy: {calculateRealAccuracy(characters, text.length)}</p>
+          <p>
+            progress:{" "}
+            {calculateProgress(requirements, {
+              wpm: calculateWpm(startTime, totalKeyPresses),
+              accuracy: calculateAccuracy(characters, text.length),
+              realAccuracy: calculateRealAccuracy(characters, text.length),
+            })}
+          </p>
         </>
       )}
     </div>
