@@ -23,17 +23,13 @@ export default function LessonList() {
     <>
       {lessons &&
         lessons.map((lesson, i) => (
-          <pre key={i}>
-            {userLessons[lesson.id] && userLessons[lesson.id].progress ? (
-              <Link href={`/lessons/${lesson.id}`}>
-                <a>
-                  {lesson.id} {userLessons[lesson.id].progress}%
-                </a>
-              </Link>
-            ) : (
-              `${lesson.id} 0%`
-            )}
-          </pre>
+          <Link href={`/lessons/${lesson.id}`}>
+            <a style={{ display: "block" }}>
+              {userLessons[lesson.id] && userLessons[lesson.id].progress
+                ? `${lesson.id} ${userLessons[lesson.id].progress}%`
+                : `${lesson.id} 0%`}
+            </a>
+          </Link>
         ))}
     </>
   );
