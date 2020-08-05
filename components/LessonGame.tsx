@@ -38,29 +38,32 @@ export default function LessonGame({
   return (
     <div>
       <StateContext.Provider value={state}>
-        <div style={{ overflow: "hidden", height: "100px" }}>
-          <div
-            style={{
-              marginTop:
-                state.currentLine > lineOffset
-                  ? `-${(state.currentLine - lineOffset) * 20}px`
-                  : "0",
-            }}
-          >
-            {lines.map((l, i) => (
-              <div key={i}>
-                {l.map((c) => (
-                  <Character
-                    key={c.position}
-                    value={c.value}
-                    position={c.position}
-                  />
-                ))}
-              </div>
-            ))}
+        {state.text.length === state.currentPosition ? (
+          <Result {...info} />
+        ) : (
+          <div style={{ overflow: "hidden", height: "100px" }}>
+            <div
+              style={{
+                marginTop:
+                  state.currentLine > lineOffset
+                    ? `-${(state.currentLine - lineOffset) * 20}px`
+                    : "0",
+              }}
+            >
+              {lines.map((l, i) => (
+                <div key={i}>
+                  {l.map((c) => (
+                    <Character
+                      key={c.position}
+                      value={c.value}
+                      position={c.position}
+                    />
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-        <Result {...info} />
+        )}
       </StateContext.Provider>
     </div>
   );

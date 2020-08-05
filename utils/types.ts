@@ -32,6 +32,7 @@ export interface IScore {
   wpm: number;
   accuracy: number;
   realAccuracy: number;
+  timestamp: number;
 }
 
 export interface User {
