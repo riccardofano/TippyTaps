@@ -37,16 +37,6 @@ export const getUserLessons = async (userId: string) => {
   return visitedLessons;
 };
 
-const addToArray = (
-  ref: firebase.firestore.DocumentReference,
-  key: string,
-  value: any
-) => {
-  ref.update({
-    [key]: firebase.firestore.FieldValue.arrayUnion(value),
-  });
-};
-
 export const addScore = ({
   userId,
   lessonId,
@@ -65,23 +55,22 @@ export const addScore = ({
 
   firebase
     .firestore()
-    .runTransaction((transaction) => {
-      return transaction.get(userLessonRef).then((doc) => {
-        if (doc.exists) {
-          const docProgress = doc.data()?.progress || 0;
-          const newProgress = docProgress < progress ? progress : docProgress;
+    .runTransaction(async (transaction) => {
+      const doc = await transaction.get(userLessonRef);
+      if (doc.exists) {
+        const docProgress = doc.data()?.progress || 0;
+        const newProgress = docProgress < progress ? progress : docProgress;
 
-          transaction.update(userLessonRef, {
-            progress: newProgress,
-            scores: firebase.firestore.FieldValue.arrayUnion(score),
-          });
-        } else {
-          transaction.update(userLessonRef, {
-            progress: progress,
-            scores: score,
-          });
-        }
-      });
+        transaction.update(userLessonRef, {
+          progress: newProgress,
+          scores: firebase.firestore.FieldValue.arrayUnion(score),
+        });
+      } else {
+        transaction.update(userLessonRef, {
+          progress: progress,
+          scores: score,
+        });
+      }
     })
     .catch((e) => console.error(e));
 };
