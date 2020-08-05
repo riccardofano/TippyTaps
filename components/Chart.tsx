@@ -2,7 +2,7 @@ import { useMemo, useEffect, useState, useContext } from "react";
 import { Line, Bar } from "react-chartjs-2";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { UserContext, IScore } from "../utils/types";
+import { UserContext, IScore, StateContext } from "../utils/types";
 import { getScores } from "../utils/db/collections";
 
 dayjs.extend(relativeTime);
@@ -13,16 +13,17 @@ interface ChartProps {
 
 export default function Chart({ lessonId }: ChartProps) {
   const { user } = useContext(UserContext);
+  const { uploaded } = useContext(StateContext);
   const [scores, setScores] = useState<IScore[]>([]);
 
   useEffect(() => {
-    if (user) {
+    if (user && uploaded) {
       // TODO: check if the new score was uploaded first
-      getScores({ userId: user.id, lessonId }).then((userScores) =>
-        setScores(userScores)
-      );
+      getScores({ userId: user.id, lessonId }).then((userScores) => {
+        setScores(userScores);
+      });
     }
-  }, [user]);
+  }, [user, uploaded]);
 
   const timestamps = scores.map((score) => score.timestamp);
   const accuracyData = scores.map((score) => score.accuracy);

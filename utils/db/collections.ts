@@ -41,7 +41,7 @@ const getUserLessonRef = (userId: string, lessonId: string) => {
   return userCollection.doc(userId).collection("lessons").doc(lessonId);
 };
 
-export const addScore = ({
+export const addScore = async ({
   userId,
   lessonId,
   score,
@@ -54,7 +54,7 @@ export const addScore = ({
 }) => {
   const userLessonRef = getUserLessonRef(userId, lessonId);
 
-  firebase
+  return firebase
     .firestore()
     .runTransaction(async (transaction) => {
       const doc = await transaction.get(userLessonRef);

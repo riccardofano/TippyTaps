@@ -44,11 +44,9 @@ export default function Result({
         lessonId: id,
         score,
         progress,
+      }).then(() => {
+        dispatch({ type: "uploaded" });
       });
-      dispatch({ type: "uploaded" });
-      // TODO: add the uploaded status to the state so the score
-      // gets uploaded again if the user tries again without having
-      // to reload the page
     }
   }, []);
 
