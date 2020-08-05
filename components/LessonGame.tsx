@@ -7,7 +7,7 @@ import { reducer } from "../utils/reducer";
 
 import Character from "../components/Character";
 import Result from "../components/Result";
-import LineChart from "../components/LineChart";
+import Chart from "./Chart";
 
 interface LessonGameProps {
   info: LessonInfo;
@@ -42,7 +42,7 @@ export default function LessonGame({
         {state.text.length === state.currentPosition ? (
           <>
             <Result {...info} />
-            <LineChart lessonId={info.id} />
+            <Chart lessonId={info.id} />
           </>
         ) : (
           <div style={{ overflow: "hidden", height: "100px" }}>

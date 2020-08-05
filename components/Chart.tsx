@@ -1,5 +1,5 @@
 import { useMemo, useEffect, useState, useContext } from "react";
-import { Line } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { UserContext, IScore } from "../utils/types";
@@ -7,11 +7,11 @@ import { getScores } from "../utils/db/collections";
 
 dayjs.extend(relativeTime);
 
-interface LineChartProps {
+interface ChartProps {
   lessonId: string;
 }
 
-export default function LineChart({ lessonId }: LineChartProps) {
+export default function Chart({ lessonId }: ChartProps) {
   const { user } = useContext(UserContext);
   const [scores, setScores] = useState<IScore[]>([]);
 
@@ -29,13 +29,23 @@ export default function LineChart({ lessonId }: LineChartProps) {
   const realAccuracyData = scores.map((score) => score.realAccuracy);
   const wpmData = scores.map((score) => score.wpm);
 
-  const data = useMemo(
+  const timeStampDates = timestamps.map((time) => dayjs(time).fromNow());
+
+  const lineData = useMemo(
     () => ({
-      labels: timestamps.map((time) => dayjs(time).fromNow()),
+      labels: timeStampDates,
       datasets: [
         { label: "Accuracy", data: accuracyData },
         { label: "Real Accuracy", data: realAccuracyData },
       ],
+    }),
+    [scores]
+  );
+
+  const barData = useMemo(
+    () => ({
+      labels: timeStampDates,
+      datasets: [{ label: "Words per minute", data: wpmData }],
     }),
     [scores]
   );
@@ -57,7 +67,8 @@ export default function LineChart({ lessonId }: LineChartProps) {
 
   return (
     <div>
-      <Line height={50} data={data} options={options} />
+      <Line height={50} data={lineData} options={options} />
+      <Bar height={50} data={barData} options={options} />
     </div>
   );
 }
