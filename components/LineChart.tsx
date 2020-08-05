@@ -1,32 +1,43 @@
-import { useMemo } from "react";
+import { useMemo, useEffect, useState, useContext } from "react";
 import { Line } from "react-chartjs-2";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { UserContext, IScore } from "../utils/types";
+import { getScores } from "../utils/db/collections";
 
 dayjs.extend(relativeTime);
 
-export default function LineChart() {
-  const timestamps = [
-    1596629517962,
-    1596629553288,
-    1596630783292,
-    1596641117575,
-  ];
+interface LineChartProps {
+  lessonId: string;
+}
+
+export default function LineChart({ lessonId }: LineChartProps) {
+  const { user } = useContext(UserContext);
+  const [scores, setScores] = useState<IScore[]>([]);
+
+  useEffect(() => {
+    if (user) {
+      // TODO: check if the new score was uploaded first
+      getScores({ userId: user.id, lessonId }).then((userScores) =>
+        setScores(userScores)
+      );
+    }
+  }, [user]);
+
+  const timestamps = scores.map((score) => score.timestamp);
+  const accuracyData = scores.map((score) => score.accuracy);
+  const realAccuracyData = scores.map((score) => score.realAccuracy);
+  const wpmData = scores.map((score) => score.wpm);
+
   const data = useMemo(
     () => ({
       labels: timestamps.map((time) => dayjs(time).fromNow()),
       datasets: [
-        {
-          label: "Accuracy",
-          data: [89, 87, 97, 95],
-        },
-        {
-          label: "Real Accuracy",
-          data: [90, 100, 100, 97],
-        },
+        { label: "Accuracy", data: accuracyData },
+        { label: "Real Accuracy", data: realAccuracyData },
       ],
     }),
-    []
+    [scores]
   );
 
   const options = useMemo(
@@ -44,5 +55,9 @@ export default function LineChart() {
     []
   );
 
-  return <Line data={data} options={options} />;
+  return (
+    <div>
+      <Line height={50} data={data} options={options} />
+    </div>
+  );
 }

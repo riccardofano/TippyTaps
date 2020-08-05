@@ -42,7 +42,7 @@ export default function LessonGame({
         {state.text.length === state.currentPosition ? (
           <>
             <Result {...info} />
-            <LineChart />
+            <LineChart lessonId={info.id} />
           </>
         ) : (
           <div style={{ overflow: "hidden", height: "100px" }}>

@@ -37,6 +37,10 @@ export const getUserLessons = async (userId: string) => {
   return visitedLessons;
 };
 
+const getUserLessonRef = (userId: string, lessonId: string) => {
+  return userCollection.doc(userId).collection("lessons").doc(lessonId);
+};
+
 export const addScore = ({
   userId,
   lessonId,
@@ -48,10 +52,7 @@ export const addScore = ({
   score: IScore;
   progress: number;
 }) => {
-  const userLessonRef = userCollection
-    .doc(userId)
-    .collection("lessons")
-    .doc(lessonId);
+  const userLessonRef = getUserLessonRef(userId, lessonId);
 
   firebase
     .firestore()
@@ -73,4 +74,15 @@ export const addScore = ({
       }
     })
     .catch((e) => console.error(e));
+};
+
+export const getScores = ({
+  userId,
+  lessonId,
+}: {
+  userId: string;
+  lessonId: string;
+}) => {
+  const userLessonRef = getUserLessonRef(userId, lessonId);
+  return userLessonRef.get().then((snap) => snap.data()?.scores);
 };
