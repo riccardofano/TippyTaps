@@ -7,6 +7,7 @@ import { reducer } from "../utils/reducer";
 
 import Character from "../components/Character";
 import Result from "../components/Result";
+import LineChart from "../components/LineChart";
 
 interface LessonGameProps {
   info: LessonInfo;
@@ -39,7 +40,10 @@ export default function LessonGame({
     <div>
       <StateContext.Provider value={state}>
         {state.text.length === state.currentPosition ? (
-          <Result {...info} />
+          <>
+            <Result {...info} />
+            <LineChart />
+          </>
         ) : (
           <div style={{ overflow: "hidden", height: "100px" }}>
             <div
