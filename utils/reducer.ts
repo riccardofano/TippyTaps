@@ -49,6 +49,10 @@ export const reducer = (draft: IState, action: Actions): IState => {
 
       return draft;
     }
+    case "uploaded": {
+      draft.uploaded = true;
+      return draft;
+    }
     default: {
       return draft;
     }

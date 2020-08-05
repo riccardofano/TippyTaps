@@ -41,7 +41,7 @@ export default function LessonGame({
       <StateContext.Provider value={state}>
         {state.text.length === state.currentPosition ? (
           <>
-            <Result {...info} />
+            <Result {...info} dispatch={dispatch} />
             <Chart lessonId={info.id} />
           </>
         ) : (

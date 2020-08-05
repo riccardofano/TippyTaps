@@ -1,5 +1,11 @@
-import { useContext, useEffect, useState } from "react";
-import { StateContext, UserContext, LessonInfo, IScore } from "../utils/types";
+import { useContext, useEffect, Dispatch } from "react";
+import {
+  StateContext,
+  UserContext,
+  LessonInfo,
+  IScore,
+  Actions,
+} from "../utils/types";
 import {
   calculateWpm,
   calculateAccuracy,
@@ -8,10 +14,20 @@ import {
 } from "../utils/wpm";
 import { addScore } from "../utils/db/collections";
 
-export default function Result({ id, text, requirements }: LessonInfo) {
-  const { characters, startTime, totalKeyPresses } = useContext(StateContext);
+interface ResultsProps extends LessonInfo {
+  dispatch: Dispatch<Actions>;
+}
+
+export default function Result({
+  id,
+  text,
+  requirements,
+  dispatch,
+}: ResultsProps) {
+  const { characters, startTime, totalKeyPresses, uploaded } = useContext(
+    StateContext
+  );
   const { user } = useContext(UserContext);
-  const [uploaded, setUploaded] = useState(false);
 
   const score: IScore = {
     wpm: calculateWpm(startTime, totalKeyPresses),
@@ -29,10 +45,10 @@ export default function Result({ id, text, requirements }: LessonInfo) {
         score,
         progress,
       });
+      dispatch({ type: "uploaded" });
       // TODO: add the uploaded status to the state so the score
       // gets uploaded again if the user tries again without having
       // to reload the page
-      setUploaded(true);
     }
   }, []);
 

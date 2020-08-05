@@ -50,9 +50,10 @@ export const initializeState = (
       lineLengths: lengths,
       currentLine: 0,
       currentPosition: 0,
+      totalKeyPresses: 0,
       startTime: 0,
       started: false,
-      totalKeyPresses: 0,
+      uploaded: false,
     },
     lines,
   };

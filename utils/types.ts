@@ -16,6 +16,7 @@ export interface IState {
   totalKeyPresses: number;
   startTime: number;
   started: boolean;
+  uploaded: boolean;
 }
 
 export interface LessonInfo {
@@ -49,7 +50,10 @@ export interface IUserContext {
 export type AllLessons = LessonInfo[];
 export type UserLessons = { [key: string]: firebase.firestore.DocumentData };
 
-export type Actions = { type: "keydown"; payload: string };
+export type Actions =
+  | { type: "keydown"; payload: string }
+  | { type: "uploaded" };
+
 export const StateContext = createContext({} as IState);
 export const UserContext = createContext({
   user: null,
