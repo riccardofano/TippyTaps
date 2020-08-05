@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import Link from "next/link";
 
 import { AllLessons, UserLessons, UserContext } from "../utils/types";
 import { getUserLessons, getAllLessons } from "../utils/db/collections";
@@ -23,9 +24,15 @@ export default function LessonList() {
       {lessons &&
         lessons.map((lesson, i) => (
           <pre key={i}>
-            {userLessons[lesson.id]
-              ? lesson.id + " played before"
-              : lesson.id + " not played"}
+            {userLessons[lesson.id] && userLessons[lesson.id].progress ? (
+              <Link href={`/lessons/${lesson.id}`}>
+                <a>
+                  {lesson.id} {userLessons[lesson.id].progress}%
+                </a>
+              </Link>
+            ) : (
+              `${lesson.id} 0%`
+            )}
           </pre>
         ))}
     </>
