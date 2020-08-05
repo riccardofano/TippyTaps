@@ -14,7 +14,7 @@ type Params = { params: { lesson: string } };
 
 export default function Lesson({ info, initialState, lines }: LessonProps) {
   return (
-    <Layout url="/lessons/tallestBuilding">
+    <Layout url={`/lessons/${info.id}`}>
       <LessonGame initialState={initialState} lines={lines} info={info} />
     </Layout>
   );
