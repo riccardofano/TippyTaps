@@ -57,7 +57,8 @@ export type UserLessons = { [key: string]: firebase.firestore.DocumentData };
 
 export type Actions =
   | { type: "keydown"; payload: string }
-  | { type: "uploaded" };
+  | { type: "uploaded" }
+  | { type: "reset" };
 
 export const StateContext = createContext({} as IState);
 export const UserContext = createContext({

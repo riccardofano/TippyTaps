@@ -1,4 +1,5 @@
 import { IState, Actions } from "./types";
+import { initializeState } from "./text";
 
 export const reducer = (draft: IState, action: Actions): IState => {
   switch (action.type) {
@@ -52,6 +53,9 @@ export const reducer = (draft: IState, action: Actions): IState => {
     case "uploaded": {
       draft.uploaded = true;
       return draft;
+    }
+    case "reset": {
+      draft = initializeState(draft.text, 30).initialState;
     }
     default: {
       return draft;

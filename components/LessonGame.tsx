@@ -39,6 +39,7 @@ export default function LessonGame({
   return (
     <div>
       <StateContext.Provider value={state}>
+        <button onClick={() => dispatch({ type: "reset" })}>Reset</button>
         {state.text.length === state.currentPosition ? (
           <>
             <Result {...info} dispatch={dispatch} />
