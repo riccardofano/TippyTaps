@@ -1,10 +1,11 @@
-import { useContext, useEffect, Dispatch } from "react";
+import { useContext, useEffect, Dispatch, useState } from "react";
 import {
   StateContext,
   UserContext,
   LessonInfo,
   IScore,
   Actions,
+  IResult,
 } from "../utils/types";
 import {
   calculateWpm,
@@ -28,16 +29,18 @@ export default function Result({
     StateContext
   );
   const { user } = useContext(UserContext);
-
-  const score: IScore = {
-    wpm: calculateWpm(startTime, totalKeyPresses),
-    accuracy: calculateAccuracy(characters, text.length),
-    realAccuracy: calculateRealAccuracy(characters, text.length),
-    timestamp: Date.now(),
-  };
-  const progress = calculateProgress(requirements, score);
+  const [result, setResult] = useState<IResult>();
 
   useEffect(() => {
+    const score = {
+      wpm: calculateWpm(startTime, totalKeyPresses),
+      accuracy: calculateAccuracy(characters, text.length),
+      realAccuracy: calculateRealAccuracy(characters, text.length),
+      timestamp: Date.now(),
+    };
+    const progress = calculateProgress(requirements, score);
+    setResult({ score, progress });
+
     if (user && id && !uploaded) {
       addScore({
         userId: user.id,
@@ -52,10 +55,14 @@ export default function Result({
 
   return (
     <div>
-      <p>words per minute: {score.wpm}</p>
-      <p>accuracy: {score.accuracy}</p>
-      <p>real accuracy: {score.realAccuracy}</p>
-      <p>progress: {progress}</p>
+      {result && (
+        <>
+          <p>words per minute: {result.score.wpm}</p>
+          <p>accuracy: {result.score.accuracy}</p>
+          <p>real accuracy: {result.score.realAccuracy}</p>
+          <p>progress: {result.progress}</p>
+        </>
+      )}
     </div>
   );
 }

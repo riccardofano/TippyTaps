@@ -36,6 +36,11 @@ export interface IScore {
   timestamp: number;
 }
 
+export interface IResult {
+  score: IScore;
+  progress: number;
+}
+
 export interface User {
   id: string;
   email: string;
