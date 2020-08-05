@@ -2,7 +2,7 @@ import initFirebase from "./init";
 import firebase from "firebase/app";
 import "firebase/firestore";
 
-import { AllLessons, UserLessons, IScore } from "../types";
+import { AllLessons, UserLessons, IScore, LessonInfo } from "../types";
 
 initFirebase();
 
@@ -14,7 +14,9 @@ export const getAllLessons = async () => {
   await lessonCollection
     .get()
     .then((snap) => {
-      snap.forEach((doc) => lessons.push({ ...doc.data(), id: doc.id }));
+      snap.forEach((doc) =>
+        lessons.push({ ...doc.data(), id: doc.id } as LessonInfo)
+      );
     })
     .catch((e) => console.error(e));
 
@@ -45,18 +47,41 @@ const addToArray = (
   });
 };
 
-export const addScore = (userId: string, lessonId: string, score: IScore) => {
-  userCollection
+export const addScore = ({
+  userId,
+  lessonId,
+  score,
+  progress,
+}: {
+  userId: string;
+  lessonId: string;
+  score: IScore;
+  progress: number;
+}) => {
+  const userLessonRef = userCollection
     .doc(userId)
     .collection("lessons")
-    .doc(lessonId)
-    .get()
-    .then((snap) => {
-      if (snap.exists) {
-        addToArray(snap.ref, "scores", score);
-      } else {
-        snap.ref.set({ score });
-      }
+    .doc(lessonId);
+
+  firebase
+    .firestore()
+    .runTransaction((transaction) => {
+      return transaction.get(userLessonRef).then((doc) => {
+        if (doc.exists) {
+          const docProgress = doc.data()?.progress || 0;
+          const newProgress = docProgress < progress ? progress : docProgress;
+
+          transaction.update(userLessonRef, {
+            progress: newProgress,
+            scores: firebase.firestore.FieldValue.arrayUnion(score),
+          });
+        } else {
+          transaction.update(userLessonRef, {
+            progress: progress,
+            scores: score,
+          });
+        }
+      });
     })
-    .catch((error) => console.error(error));
+    .catch((e) => console.error(e));
 };

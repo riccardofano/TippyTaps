@@ -24,10 +24,18 @@ export default function Result({ id, text, requirements }: LessonInfo) {
   useEffect(() => {
     if (text.length === currentPosition) {
       if (user && id && !complete) {
-        addScore(user.id, id, {
+        const score = {
           wpm: calculateWpm(startTime, totalKeyPresses),
           accuracy: calculateAccuracy(characters, text.length),
           realAccuracy: calculateRealAccuracy(characters, text.length),
+        };
+        const progress = calculateProgress(requirements, score);
+
+        addScore({
+          userId: user.id,
+          lessonId: id,
+          score,
+          progress,
         });
       }
       setComplete(true);
