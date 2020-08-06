@@ -23,7 +23,7 @@ interface LineContainerProps {
 const LineContainer = styled.div.attrs<LineContainerProps>(
   ({ current, offset }) => ({
     style: {
-      marginTop: current > offset ? `-${(current - offset) * 40}px` : 0,
+      marginTop: current > offset ? `-${(current - offset) * 59}px` : 0,
     },
   })
 )<LineContainerProps>``;
