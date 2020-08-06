@@ -5,9 +5,11 @@ import { StateContext, IState, ICharacter, LessonInfo } from "../utils/types";
 import { keyHandler } from "../utils/keyHandler";
 import { reducer } from "../utils/reducer";
 
-import LessonText from "../components/LessonText";
-import Result from "../components/Result";
+import LessonText from "./LessonText";
+import Result from "./Result";
 import Chart from "./Chart";
+import ProgressBar from "./ProgressBar";
+import { STATUS_CODES } from "http";
 
 interface LessonGameProps {
   info: LessonInfo;
@@ -43,11 +45,16 @@ export default function LessonGame({
             <Chart lessonId={info.id} />
           </>
         ) : (
-          <LessonText
-            lines={lines}
-            currentLine={state.currentLine}
-            lineOffset={1}
-          />
+          <>
+            <ProgressBar
+              length={(state.currentPosition / state.text.length) * 100}
+            />
+            <LessonText
+              lines={lines}
+              currentLine={state.currentLine}
+              lineOffset={1}
+            />
+          </>
         )}
       </StateContext.Provider>
     </div>
