@@ -30,6 +30,33 @@ const Modal = styled.div`
   cursor: auto;
 `;
 
+const Logo = styled.h1`
+  font-size: 24px;
+  font-weight: bold;
+`;
+
+const Button = styled.button`
+  font-size: 16px;
+  font-weight: 400;
+  padding: 0.2rem 1rem;
+  color: #000;
+  background: #fff;
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0 3px 14px -5px rgba(0, 0, 0, 0.1);
+`;
+
+const LoginButton = styled(Button)`
+  color: #fff;
+  background: linear-gradient(90deg, #4ba8ec 0%, #0f57c2 100%);
+`;
+
+const StyledNavBar = styled.nav`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 interface NavbarProps {
   url?: string;
 }
@@ -46,12 +73,13 @@ export default function Navbar({ url }: NavbarProps) {
   };
 
   return (
-    <div>
+    <StyledNavBar>
+      <Logo>TippyTaps</Logo>
       {user ? (
-        <button onClick={() => logout()}>Logout</button>
+        <Button onClick={() => logout()}>Logout</Button>
       ) : (
         <>
-          <button onClick={() => setOpen(true)}>Login</button>
+          <LoginButton onClick={() => setOpen(true)}>Login</LoginButton>
           {open && (
             <Background ref={backgroundRef} onClick={handleClick}>
               <Modal>
@@ -62,6 +90,6 @@ export default function Navbar({ url }: NavbarProps) {
           )}
         </>
       )}
-    </div>
+    </StyledNavBar>
   );
 }
