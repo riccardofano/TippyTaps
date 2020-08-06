@@ -69,7 +69,7 @@ export const addScore = async ({
       } else {
         transaction.set(userLessonRef, {
           progress: progress,
-          scores: score,
+          scores: [score],
         });
       }
     })
