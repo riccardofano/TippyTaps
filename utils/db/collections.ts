@@ -76,7 +76,7 @@ export const addScore = async ({
     .catch((e) => console.error(e));
 };
 
-export const getScores = ({
+export const getScores = async ({
   userId,
   lessonId,
 }: {
@@ -84,5 +84,6 @@ export const getScores = ({
   lessonId: string;
 }) => {
   const userLessonRef = getUserLessonRef(userId, lessonId);
-  return userLessonRef.get().then((snap) => snap.data()?.scores);
+  const snap = await userLessonRef.get();
+  return snap.data()?.scores;
 };
