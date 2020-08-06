@@ -5,7 +5,7 @@ import { StateContext, IState, ICharacter, LessonInfo } from "../utils/types";
 import { keyHandler } from "../utils/keyHandler";
 import { reducer } from "../utils/reducer";
 
-import Character from "../components/Character";
+import LessonText from "../components/LessonText";
 import Result from "../components/Result";
 import Chart from "./Chart";
 
@@ -33,9 +33,6 @@ export default function LessonGame({
     };
   });
 
-  // This determines when the line should start and stop scrolling
-  const lineOffset = 1;
-
   return (
     <div>
       <StateContext.Provider value={state}>
@@ -46,28 +43,11 @@ export default function LessonGame({
             <Chart lessonId={info.id} />
           </>
         ) : (
-          <div style={{ overflow: "hidden", height: "100px" }}>
-            <div
-              style={{
-                marginTop:
-                  state.currentLine > lineOffset
-                    ? `-${(state.currentLine - lineOffset) * 20}px`
-                    : "0",
-              }}
-            >
-              {lines.map((l, i) => (
-                <div key={i}>
-                  {l.map((c) => (
-                    <Character
-                      key={c.position}
-                      value={c.value}
-                      position={c.position}
-                    />
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
+          <LessonText
+            lines={lines}
+            currentLine={state.currentLine}
+            lineOffset={1}
+          />
         )}
       </StateContext.Provider>
     </div>
