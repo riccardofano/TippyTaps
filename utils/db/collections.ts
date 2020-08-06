@@ -67,7 +67,7 @@ export const addScore = async ({
           scores: firebase.firestore.FieldValue.arrayUnion(score),
         });
       } else {
-        transaction.update(userLessonRef, {
+        transaction.set(userLessonRef, {
           progress: progress,
           scores: score,
         });

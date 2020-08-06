@@ -24,19 +24,24 @@ export default function Chart({ lessonId }: ChartProps) {
     }
   }, [user, uploaded]);
 
-  const timestamps = scores.map((score) => score.timestamp);
-  const accuracyData = scores.map((score) => score.accuracy);
-  const realAccuracyData = scores.map((score) => score.realAccuracy);
-  const wpmData = scores.map((score) => score.wpm);
-
-  const timeStampDates = timestamps.map((time) => dayjs(time).fromNow());
+  const results = scores
+    ? {
+        timestamps: scores.map((score) => score.timestamp),
+        accuracyData: scores.map((score) => score.accuracy),
+        realAccuracyData: scores.map((score) => score.realAccuracy),
+        wpmData: scores.map((score) => score.wpm),
+      }
+    : { timestamps: [], accuracyData: [], realAccuracyData: [], wpmData: [] };
+  const timeStampDates = results.timestamps.map((time) =>
+    dayjs(time).fromNow()
+  );
 
   const lineData = useMemo(
     () => ({
       labels: timeStampDates,
       datasets: [
-        { label: "Accuracy", data: accuracyData },
-        { label: "Real Accuracy", data: realAccuracyData },
+        { label: "Accuracy", data: results.accuracyData },
+        { label: "Real Accuracy", data: results.realAccuracyData },
       ],
     }),
     [scores]
@@ -45,7 +50,7 @@ export default function Chart({ lessonId }: ChartProps) {
   const barData = useMemo(
     () => ({
       labels: timeStampDates,
-      datasets: [{ label: "Words per minute", data: wpmData }],
+      datasets: [{ label: "Words per minute", data: results.wpmData }],
     }),
     [scores]
   );

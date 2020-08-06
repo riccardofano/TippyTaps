@@ -9,7 +9,6 @@ import LessonText from "./LessonText";
 import Result from "./Result";
 import Chart from "./Chart";
 import ProgressBar from "./ProgressBar";
-import { STATUS_CODES } from "http";
 
 interface LessonGameProps {
   info: LessonInfo;
