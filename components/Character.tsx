@@ -1,5 +1,39 @@
 import { useContext } from "react";
 import { StateContext } from "../utils/types";
+import styled from "styled-components";
+
+interface StyledCharacterProps {
+  position: number;
+  currentPosition: number;
+  correct: boolean;
+  wasIncorrect: boolean;
+}
+
+const StyledCharacter = styled.span<StyledCharacterProps>`
+  padding: 0 1px;
+  margin: 0 1px;
+  border-radius: 3px;
+
+  background-color: ${({
+    position,
+    currentPosition,
+    correct,
+    wasIncorrect,
+  }) => {
+    if (position < currentPosition) {
+      return correct ? (wasIncorrect ? "#ffd78c" : "#86eda9") : "#ff6e6e";
+    }
+    return "transparent";
+  }};
+
+  ${({ position, currentPosition }) =>
+    position === currentPosition &&
+    `
+    border-bottom: 4px solid blue;
+    border-radius: 3px 3px 0 0;
+    background-color: rgba(0,0,0,0.05);
+  `}
+`;
 
 interface CharacterProps {
   position: number;
@@ -21,5 +55,9 @@ export default function Character({ position, value }: CharacterProps) {
   style =
     currentPosition <= position ? { backgroundColor: "transparent" } : style;
 
-  return <span style={style}>{value}</span>;
+  return (
+    <StyledCharacter {...{ position, currentPosition, correct, wasIncorrect }}>
+      {value}
+    </StyledCharacter>
+  );
 }
