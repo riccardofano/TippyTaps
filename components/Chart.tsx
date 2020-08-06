@@ -18,7 +18,6 @@ export default function Chart({ lessonId }: ChartProps) {
 
   useEffect(() => {
     if (user && uploaded) {
-      // TODO: check if the new score was uploaded first
       getScores({ userId: user.id, lessonId }).then((userScores) => {
         setScores(userScores);
       });
@@ -68,8 +67,8 @@ export default function Chart({ lessonId }: ChartProps) {
 
   return (
     <div>
-      <Line height={50} data={lineData} options={options} />
-      <Bar height={50} data={barData} options={options} />
+      <Line data={lineData} options={options} />
+      <Bar data={barData} options={options} />
     </div>
   );
 }
