@@ -4,6 +4,8 @@ import Link from "next/link";
 import { AllLessons, UserLessons, UserContext } from "../utils/types";
 import { getUserLessons, getAllLessons } from "../utils/db/collections";
 
+import LessonCard from "./LessonCard";
+
 export default function LessonList() {
   const { user } = useContext(UserContext);
 
@@ -23,13 +25,18 @@ export default function LessonList() {
     <>
       {lessons &&
         lessons.map((lesson, i) => (
-          <Link key={i} href={`/lessons/${lesson.id}`}>
-            <a style={{ display: "block" }}>
-              {userLessons[lesson.id] && userLessons[lesson.id].progress
-                ? `${lesson.id} ${userLessons[lesson.id].progress}%`
-                : `${lesson.id} 0%`}
-            </a>
-          </Link>
+          <LessonCard
+            key={i}
+            id={lesson.id}
+            name={lesson.id}
+            wpm={lesson.requirements.wpm}
+            accuracy={lesson.requirements.accuracy}
+            progress={
+              userLessons[lesson.id] && userLessons[lesson.id].progress
+                ? userLessons[lesson.id].progress
+                : 0
+            }
+          />
         ))}
     </>
   );
