@@ -59,7 +59,7 @@ export type Actions =
   | { type: "keydown"; payload: string }
   | { type: "uploaded" }
   | { type: "widthChange"; payload: number[] }
-  | { type: "reset" };
+  | { type: "reset"; payload: number[] };
 
 export const StateContext = createContext({} as IState);
 export const UserContext = createContext({

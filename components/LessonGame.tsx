@@ -21,6 +21,7 @@ interface LessonGameProps {
 export default function LessonGame({ info, initialState }: LessonGameProps) {
   const [state, dispatch] = useImmerReducer(reducer, initialState);
   const [lines, setLines] = useState<ICharacter[][]>([]);
+  const [lineLengths, setLineLengths] = useState<number[]>([]);
 
   const handler = useCallback((e) => {
     keyHandler(e, dispatch);
@@ -40,15 +41,20 @@ export default function LessonGame({ info, initialState }: LessonGameProps) {
   );
 
   useEffect(() => {
-    const [currenLines, lineLengths] = buildLines(state.characters, lineWidth);
+    const [currenLines, Lengths] = buildLines(state.characters, lineWidth);
     setLines(currenLines);
+    setLineLengths(Lengths);
     dispatch({ type: "widthChange", payload: lineLengths });
   }, [lineWidth]);
 
   return (
     <div>
       <StateContext.Provider value={state}>
-        <button onClick={() => dispatch({ type: "reset" })}>Reset</button>
+        <button
+          onClick={() => dispatch({ type: "reset", payload: lineLengths })}
+        >
+          Reset
+        </button>
         {state.text.length === state.currentPosition ? (
           <>
             <Result {...info} dispatch={dispatch} />
