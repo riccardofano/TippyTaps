@@ -72,8 +72,14 @@ export default function Chart({ lessonId }: ChartProps) {
 
   return (
     <div>
-      <Line data={lineData} options={options} />
-      <Bar data={barData} options={options} />
+      {user ? (
+        <>
+          <Line data={lineData} options={options} />
+          <Bar data={barData} options={options} />
+        </>
+      ) : (
+        <p>Log in to upload your scores</p>
+      )}
     </div>
   );
 }

@@ -1,16 +1,21 @@
 import { ICharacter } from "../utils/types";
+import { querySize } from "../utils/useMedia";
 import Character from "./Character";
 import styled from "styled-components";
 
 const Container = styled.div`
   margin: 0 auto;
   font-family: "Roboto mono", monospace;
-  font-size: 30px;
+  font-size: 22px;
   color: #000;
   height: 250px;
   width: max-content;
   white-space: pre;
   overflow: hidden;
+
+  @media ${querySize.medium} {
+    font-size: 32px;
+  }
 `;
 
 interface LineContainerProps {
@@ -18,15 +23,24 @@ interface LineContainerProps {
   offset: number;
 }
 
-// You need to put the prop type twice for TS to stop complaining
-// https://stackoverflow.com/a/61980137
+// This is so jank, there has to be a better way.
+// but I don't want to create a new class per line per screen size
 const LineContainer = styled.div.attrs<LineContainerProps>(
   ({ current, offset }) => ({
     style: {
-      marginTop: current > offset ? `-${(current - offset) * 59}px` : 0,
+      marginTop:
+        current > offset
+          ? `calc(-${current - offset} * var(--line-height))`
+          : 0,
     },
   })
-)<LineContainerProps>``;
+)<LineContainerProps>`
+  --line-height: 49px;
+
+  @media ${querySize.medium} {
+    --line-height: 63px;
+  }
+`;
 
 const Line = styled.div`
   margin-top: 20px;
