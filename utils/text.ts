@@ -1,6 +1,6 @@
 import { ICharacter, IState } from "./types";
 
-const buildLines = (
+export const buildLines = (
   chars: ICharacter[],
   limit = 30
 ): [ICharacter[][], number[]] => {
@@ -28,6 +28,20 @@ const buildLines = (
   return [lines, lengths];
 };
 
+export const findCurrentLine = (
+  position: number,
+  lineLengths: number[]
+): number => {
+  let line = 0;
+  for (let i = 1; i < lineLengths.length; i++) {
+    if (position < lineLengths[i]) {
+      line = i;
+      break;
+    }
+  }
+  return line;
+};
+
 const buildCharacters = (text: string): ICharacter[] =>
   text.split("").map((c, i) => ({
     value: c,
@@ -36,25 +50,18 @@ const buildCharacters = (text: string): ICharacter[] =>
     wasIncorrect: false,
   }));
 
-export const initializeState = (
-  text: string,
-  limit: number
-): { initialState: IState; lines: ICharacter[][] } => {
+export const initializeState = (text: string): IState => {
   const characters = buildCharacters(text);
-  const [lines, lengths] = buildLines(characters, limit);
 
   return {
-    initialState: {
-      text,
-      characters,
-      lineLengths: lengths,
-      currentLine: 0,
-      currentPosition: 0,
-      totalKeyPresses: 0,
-      startTime: 0,
-      started: false,
-      uploaded: false,
-    },
-    lines,
+    text,
+    characters,
+    lineLengths: [],
+    currentLine: 0,
+    currentPosition: 0,
+    totalKeyPresses: 0,
+    startTime: 0,
+    started: false,
+    uploaded: false,
   };
 };

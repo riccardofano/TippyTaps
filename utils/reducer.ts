@@ -1,5 +1,5 @@
 import { IState, Actions } from "./types";
-import { initializeState } from "./text";
+import { initializeState, findCurrentLine } from "./text";
 
 export const reducer = (draft: IState, action: Actions): IState => {
   switch (action.type) {
@@ -54,8 +54,16 @@ export const reducer = (draft: IState, action: Actions): IState => {
       draft.uploaded = true;
       return draft;
     }
+    case "widthChange": {
+      draft.lineLengths = action.payload;
+      draft.currentLine = findCurrentLine(
+        draft.currentPosition,
+        action.payload
+      );
+      return draft;
+    }
     case "reset": {
-      draft = initializeState(draft.text, 30).initialState;
+      draft = initializeState(draft.text);
     }
     default: {
       return draft;
