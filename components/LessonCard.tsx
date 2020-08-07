@@ -46,7 +46,7 @@ export default function LessonCard({
   progress,
 }: LessonCardProps) {
   return (
-    <Link href={`lessons/${id}`}>
+    <Link href="/lessons/[lesson]" as={`/lessons/${id}`}>
       <StyledLessonCard>
         <InfoContainer>
           <Title>{name}</Title>
