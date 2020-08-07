@@ -55,6 +55,7 @@ const StyledNavBar = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 2rem 0;
 `;
 
 interface NavbarProps {
