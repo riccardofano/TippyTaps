@@ -39,3 +39,9 @@ export const useMedia = (
 
   return defaultValue;
 };
+
+export const querySize = {
+  small: "(min-width: 360px)",
+  medium: "(min-width: 800px)",
+  large: "(min-width: 1200px)",
+};

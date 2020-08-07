@@ -4,7 +4,7 @@ import { useImmerReducer } from "use-immer";
 import { StateContext, IState, ICharacter, LessonInfo } from "../utils/types";
 import { keyHandler } from "../utils/keyHandler";
 import { reducer } from "../utils/reducer";
-import { useMedia } from "../utils/useMedia";
+import { useMedia, querySize } from "../utils/useMedia";
 
 import LessonText from "./LessonText";
 import Result from "./Result";
@@ -34,7 +34,7 @@ export default function LessonGame({ info, initialState }: LessonGameProps) {
   });
 
   const lineWidth = useMedia(
-    ["(min-width: 1200px)", "(min-width: 800px)", "(min-width: 360px)"],
+    [querySize.large, querySize.medium, querySize.small],
     [30, 20, 10],
     30
   );

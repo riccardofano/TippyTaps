@@ -1,5 +1,6 @@
 import { useUser } from "../utils/db/useUser";
 import { UserContext } from "../utils/types";
+import { querySize } from "../utils/useMedia";
 import styled from "styled-components";
 
 import Navbar from "./NavBar";
@@ -8,11 +9,11 @@ const StyledLayout = styled.main`
   margin: 0 auto;
   padding: 0 35px;
 
-  @media (min-width: 800px) {
+  @media (${querySize.medium}) {
     max-width: 768px;
     padding: 0;
   }
-  @media (min-width: 1200px) {
+  @media (${querySize.large}) {
     max-width: 1160px;
     padding: 0;
   }

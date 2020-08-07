@@ -1,8 +1,8 @@
-import FirebaseAuth from "./FirebaseAuth";
-
 import { useContext, useState, MouseEvent, createRef, RefObject } from "react";
-import { UserContext } from "../utils/types";
 import styled from "styled-components";
+
+import { UserContext } from "../utils/types";
+import FirebaseAuth from "./FirebaseAuth";
 
 interface BackgroundProps {
   onClick: (event: MouseEvent<HTMLDivElement>) => void;
