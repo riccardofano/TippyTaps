@@ -1,10 +1,25 @@
 import { useEffect, useState, useContext } from "react";
-import Link from "next/link";
 
 import { AllLessons, UserLessons, UserContext } from "../utils/types";
+import { querySize } from "../utils/useMedia";
 import { getUserLessons, getAllLessons } from "../utils/db/collections";
 
 import LessonCard from "./LessonCard";
+import styled from "styled-components";
+
+const StyledLessonList = styled.section`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+
+  @media ${querySize.medium} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media ${querySize.large} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+`;
 
 export default function LessonList() {
   const { user } = useContext(UserContext);
@@ -22,7 +37,7 @@ export default function LessonList() {
   }, [user]);
 
   return (
-    <>
+    <StyledLessonList>
       {lessons &&
         lessons.map((lesson, i) => (
           <LessonCard
@@ -39,6 +54,6 @@ export default function LessonList() {
             }
           />
         ))}
-    </>
+    </StyledLessonList>
   );
 }

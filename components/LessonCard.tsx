@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styled from "styled-components";
+import { querySize } from "../utils/useMedia";
 import ProgressRing from "./ProgressRing";
 
 const InfoContainer = styled.div`
@@ -12,7 +13,6 @@ const StyledLessonCard = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0.3rem 1rem;
-  margin-bottom: 20px;
   border-radius: 20px;
   background: #fff;
   box-shadow: 0 3px 14px -5px rgba(0, 0, 0, 0.15);
