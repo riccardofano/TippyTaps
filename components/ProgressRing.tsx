@@ -83,7 +83,6 @@ export default function LessonRing({ progress, number }: LessonRingProps) {
         x={radius}
         y={radius + 9}
         fill="#000"
-        fontWeight={700}
         fontFamily={"Rubik"}
         fontSize="24px"
         textAnchor="middle"
