@@ -7,14 +7,17 @@ const Container = styled.div`
   margin: 0 auto;
   font-family: "Roboto mono", monospace;
   font-size: 22px;
+  line-height: 29px;
   color: #000;
-  height: 250px;
+  height: 245px;
   width: max-content;
   white-space: pre;
   overflow: hidden;
 
   @media ${querySize.medium} {
     font-size: 32px;
+    line-height: 47px;
+    height: 335px;
   }
 `;
 
@@ -24,21 +27,22 @@ interface LineContainerProps {
 }
 
 // This is so jank, there has to be a better way.
-// but I don't want to create a new class per line per screen size
+// I don't want put this outside the attrs and create a new class per line per screen size
 const LineContainer = styled.div.attrs<LineContainerProps>(
   ({ current, offset }) => ({
     style: {
       marginTop:
         current > offset
-          ? `calc(-${current - offset} * var(--line-height))`
+          ? `calc(-${current - offset} * var(--lines-height))`
           : 0,
     },
   })
 )<LineContainerProps>`
-  --line-height: 49px;
+  transition: margin-top 200ms ease-in-out;
+  --lines-height: 49px;
 
   @media ${querySize.medium} {
-    --line-height: 63px;
+    --lines-height: 67px;
   }
 `;
 

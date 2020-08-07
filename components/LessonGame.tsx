@@ -11,7 +11,6 @@ import Result from "./Result";
 import Chart from "./Chart";
 import ProgressBar from "./ProgressBar";
 import { buildLines } from "../utils/text";
-import { setMaxListeners } from "process";
 
 interface LessonGameProps {
   info: LessonInfo;
@@ -44,7 +43,7 @@ export default function LessonGame({ info, initialState }: LessonGameProps) {
     const [currenLines, Lengths] = buildLines(state.characters, lineWidth);
     setLines(currenLines);
     setLineLengths(Lengths);
-    dispatch({ type: "widthChange", payload: lineLengths });
+    dispatch({ type: "widthChange", payload: Lengths });
   }, [lineWidth]);
 
   return (
@@ -68,7 +67,7 @@ export default function LessonGame({ info, initialState }: LessonGameProps) {
             <LessonText
               lines={lines}
               currentLine={state.currentLine}
-              lineOffset={1}
+              lineOffset={2}
             />
           </div>
         )}
