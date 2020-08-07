@@ -27,6 +27,7 @@ export default function LessonList() {
         lessons.map((lesson, i) => (
           <LessonCard
             key={i}
+            number={i + 1}
             id={lesson.id}
             name={lesson.id}
             wpm={lesson.requirements.wpm}
