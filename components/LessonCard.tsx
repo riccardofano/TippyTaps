@@ -11,7 +11,7 @@ const StyledLessonCard = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
+  padding: 0.3rem 1rem;
   margin-bottom: 20px;
   border-radius: 20px;
   background: #fff;
