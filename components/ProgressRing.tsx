@@ -1,4 +1,5 @@
-import styled, { keyframes, css } from "styled-components";
+import styled from "styled-components";
+import { useEffect, useState } from "react";
 
 interface BottomCircleProps {
   circleStroke: number;
@@ -21,11 +22,6 @@ const BottomCircle = styled.circle.attrs<BottomCircleProps>(
   transform-origin: 50% 50%;
 `;
 
-const fillUp = (props: TopCircleProps) => keyframes`
-  from { stroke-dashoffset: 162; }
-  to { stroke-dashoffset: ${props.offset}; }
-`;
-
 interface TopCircleProps extends BottomCircleProps {
   offset: number;
   progress: number;
@@ -44,8 +40,8 @@ const TopCircle = styled(BottomCircle).attrs<TopCircleProps>(
     props.circumference + " " + props.circumference};
   stroke: ${(props) =>
     props.progress === 100 ? "url(#gradientFull)" : "url(#gradient)"};
-  animation: ${fillUp} 500ms ease-in;
   stroke-linecap: round;
+  transition: stroke-dashoffset 500ms ease-in;
 `;
 
 interface LessonRingProps {
@@ -54,12 +50,23 @@ interface LessonRingProps {
 }
 
 export default function LessonRing({ progress, number }: LessonRingProps) {
+  const [currentProgress, setCurrentProgress] = useState(0);
   const radius = 40;
   const stroke = 7;
+  const animationDelay = 333;
   const normalizedRadius = radius - stroke * 2;
   const circumference = normalizedRadius * 2 * Math.PI;
 
-  const strokeDashoffset = circumference - (progress / 100) * circumference;
+  const strokeDashoffset =
+    circumference - (currentProgress / 100) * circumference;
+
+  useEffect(() => {
+    const timeout = setTimeout(
+      () => setCurrentProgress(progress),
+      animationDelay
+    );
+    return () => clearTimeout(timeout);
+  });
 
   return (
     <svg height={radius * 2} width={radius * 2}>
@@ -76,7 +83,7 @@ export default function LessonRing({ progress, number }: LessonRingProps) {
           circumference={circumference}
           normalizedRadius={normalizedRadius}
           offset={strokeDashoffset}
-          progress={progress}
+          progress={currentProgress}
         />
       )}
       <text
