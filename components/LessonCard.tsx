@@ -17,6 +17,7 @@ const StyledLessonCard = styled.div`
   box-shadow: 0 3px 14px -5px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   transition: all 200ms ease-in-out;
+  transition-property: box-shadow, transform;
 
   &:hover {
     box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.15);
