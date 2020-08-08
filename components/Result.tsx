@@ -77,11 +77,16 @@ export default function Result({
     <div>
       {result && (
         <>
-          <ProgressRing progress={progress.wpm} number={result.wpm} />
-          <ProgressRing progress={progress.accuracy} number={result.accuracy} />
+          <ProgressRing progress={progress.wpm} number={result.wpm} large />
+          <ProgressRing
+            progress={progress.accuracy}
+            number={result.accuracy}
+            large
+          />
           <ProgressRing
             progress={progress.realAccuracy}
             number={result.realAccuracy}
+            large
           />
         </>
       )}

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { querySize, useMedia } from "../utils/useMedia";
 
 interface BottomCircleProps {
   circleStroke: number;
@@ -47,13 +48,26 @@ const TopCircle = styled(BottomCircle).attrs<TopCircleProps>(
 interface LessonRingProps {
   progress: number;
   number: number;
+  large?: boolean;
 }
 
-export default function LessonRing({ progress, number }: LessonRingProps) {
+export default function LessonRing({
+  progress,
+  number,
+  large,
+}: LessonRingProps) {
   const [currentProgress, setCurrentProgress] = useState(0);
-  const radius = 40;
-  const stroke = 7;
-  const animationDelay = 333;
+
+  const radius = large
+    ? useMedia(
+        [querySize.large, querySize.medium, querySize.small],
+        [70, 70, 40],
+        40
+      )
+    : 40;
+
+  const stroke = radius === 40 ? 7 : 10;
+  const animationDelay = 300;
   const normalizedRadius = radius - stroke * 2;
   const circumference = normalizedRadius * 2 * Math.PI;
 
@@ -88,10 +102,10 @@ export default function LessonRing({ progress, number }: LessonRingProps) {
       )}
       <text
         x={radius}
-        y={radius + 9}
+        y={radius * 1.17}
         fill="#000"
         fontFamily={"Rubik"}
-        fontSize="24px"
+        fontSize={radius === 40 ? "22px" : "36px"}
         textAnchor="middle"
         alignmentBaseline="central"
       >
