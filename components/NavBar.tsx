@@ -1,4 +1,5 @@
 import { useContext, useState, MouseEvent, createRef, RefObject } from "react";
+import Link from "next/link";
 import styled from "styled-components";
 
 import { UserContext } from "../utils/types";
@@ -32,9 +33,17 @@ const Modal = styled.div`
   cursor: auto;
 `;
 
-const Logo = styled.h1`
+const Logo = styled.a`
   font-size: 24px;
   font-weight: bold;
+  text-decoration: none;
+  color: #000;
+  cursor: pointer;
+  transition: transform 100ms ease-in;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
 
   @media ${querySize.medium} {
     font-size: 28px;
@@ -65,7 +74,9 @@ export default function Navbar({ url }: NavbarProps) {
 
   return (
     <StyledNavBar>
-      <Logo>TippyTaps</Logo>
+      <Link href="/">
+        <Logo>TippyTaps</Logo>
+      </Link>
       {user ? (
         <Button onClick={() => logout()}>Logout</Button>
       ) : (
