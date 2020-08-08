@@ -34,13 +34,14 @@ type Stats = {
   realAccuracy: number;
 };
 
-export const calculateProgress = (requirements: Stats, score: Stats) => {
-  const wpmPercent = score.wpm / requirements.wpm;
-  const accuracyPercent = score.accuracy / requirements.accuracy;
-  const realAccuracyPercent = score.realAccuracy / requirements.realAccuracy;
+export const greaterThan100 = (score: number) => {
+  return score > 100 ? 100 : score;
+};
 
+export const calculateProgress = (scores: number[]) => {
   const percent = Math.round(
-    wpmPercent * accuracyPercent * realAccuracyPercent * 100
+    scores.reduce((previous: number, current: number) => previous * current) *
+      100
   );
 
   return percent > 100 ? 100 : percent;
