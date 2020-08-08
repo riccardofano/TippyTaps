@@ -2,7 +2,9 @@ import { useContext, useState, MouseEvent, createRef, RefObject } from "react";
 import styled from "styled-components";
 
 import { UserContext } from "../utils/types";
+import { querySize } from "../utils/useMedia";
 import FirebaseAuth from "./FirebaseAuth";
+import { Button, HighlightButton } from "./Buttons";
 
 interface BackgroundProps {
   onClick: (event: MouseEvent<HTMLDivElement>) => void;
@@ -33,22 +35,10 @@ const Modal = styled.div`
 const Logo = styled.h1`
   font-size: 24px;
   font-weight: bold;
-`;
 
-const Button = styled.button`
-  font-size: 16px;
-  font-weight: 400;
-  padding: 0.2rem 1rem;
-  color: #000;
-  background: #fff;
-  border-radius: 20px;
-  border: none;
-  box-shadow: 0 3px 14px -5px rgba(0, 0, 0, 0.1);
-`;
-
-const LoginButton = styled(Button)`
-  color: #fff;
-  background: linear-gradient(90deg, #4ba8ec 0%, #0f57c2 100%);
+  @media ${querySize.medium} {
+    font-size: 28px;
+  }
 `;
 
 const StyledNavBar = styled.nav`
@@ -80,7 +70,7 @@ export default function Navbar({ url }: NavbarProps) {
         <Button onClick={() => logout()}>Logout</Button>
       ) : (
         <>
-          <LoginButton onClick={() => setOpen(true)}>Login</LoginButton>
+          <HighlightButton onClick={() => setOpen(true)}>Login</HighlightButton>
           {open && (
             <Background ref={backgroundRef} onClick={handleClick}>
               <Modal>
