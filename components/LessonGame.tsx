@@ -1,16 +1,17 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, MouseEvent } from "react";
 import { useImmerReducer } from "use-immer";
 
 import { StateContext, IState, ICharacter, LessonInfo } from "../utils/types";
 import { keyHandler } from "../utils/keyHandler";
 import { reducer } from "../utils/reducer";
 import { useMedia, querySize } from "../utils/useMedia";
+import { buildLines } from "../utils/text";
 
 import LessonText from "./LessonText";
 import Result from "./Result";
 import Chart from "./Chart";
 import ProgressBar from "./ProgressBar";
-import { buildLines } from "../utils/text";
+import { Button } from "./Buttons";
 
 interface LessonGameProps {
   info: LessonInfo;
@@ -46,14 +47,15 @@ export default function LessonGame({ info, initialState }: LessonGameProps) {
     dispatch({ type: "widthChange", payload: Lengths });
   }, [lineWidth]);
 
+  const handleReset = (event: MouseEvent<HTMLButtonElement>) => {
+    dispatch({ type: "reset", payload: lineLengths });
+    // Remove focus otherwise pressing spacebar will reset the progress
+    event.currentTarget.blur();
+  };
+
   return (
     <div>
       <StateContext.Provider value={state}>
-        <button
-          onClick={() => dispatch({ type: "reset", payload: lineLengths })}
-        >
-          Reset
-        </button>
         {state.text.length === state.currentPosition ? (
           <>
             <Result {...info} dispatch={dispatch} />
@@ -71,6 +73,7 @@ export default function LessonGame({ info, initialState }: LessonGameProps) {
             />
           </div>
         )}
+        <Button onClick={handleReset}>Reset</Button>
       </StateContext.Provider>
     </div>
   );
