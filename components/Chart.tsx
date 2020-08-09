@@ -1,15 +1,21 @@
 import { useMemo, useEffect, useState, useContext } from "react";
-import { Line, Bar } from "react-chartjs-2";
+import { Line, Bar, defaults } from "react-chartjs-2";
+
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
+dayjs.extend(LocalizedFormat);
+
 import { UserContext, IScore, StateContext } from "../utils/types";
 import { getScores } from "../utils/db/collections";
-
-dayjs.extend(relativeTime);
+import styled from "styled-components";
 
 interface ChartProps {
   lessonId: string;
 }
+
+const ChartContainer = styled.div`
+  height: 300px;
+`;
 
 export default function Chart({ lessonId }: ChartProps) {
   const { user } = useContext(UserContext);
@@ -26,22 +32,32 @@ export default function Chart({ lessonId }: ChartProps) {
 
   const results = scores
     ? {
-        timestamps: scores.map((score) => score.timestamp),
-        accuracyData: scores.map((score) => score.accuracy),
-        realAccuracyData: scores.map((score) => score.realAccuracy),
-        wpmData: scores.map((score) => score.wpm),
+        timestamps: scores.map((score) => score.timestamp).slice(-5),
+        accuracyData: scores.map((score) => score.accuracy).slice(-5),
+        realAccuracyData: scores.map((score) => score.realAccuracy).slice(-5),
+        wpmData: scores.map((score) => score.wpm).slice(-5),
       }
     : { timestamps: [], accuracyData: [], realAccuracyData: [], wpmData: [] };
   const timeStampDates = results.timestamps.map((time) =>
-    dayjs(time).fromNow()
+    dayjs(time).format("LT")
   );
 
   const lineData = useMemo(
     () => ({
       labels: timeStampDates,
       datasets: [
-        { label: "Accuracy", data: results.accuracyData },
-        { label: "Real Accuracy", data: results.realAccuracyData },
+        {
+          label: "Accuracy",
+          data: results.accuracyData,
+          borderColor: "rgba(15, 87, 194, 0.6)",
+          backgroundColor: "rgba(75, 168, 236, 0.3)",
+        },
+        {
+          label: "Real Accuracy",
+          data: results.realAccuracyData,
+          borderColor: "rgba(15, 87, 194, 0.6)",
+          backgroundColor: "rgba(75, 168, 236, 0.3)",
+        },
       ],
     }),
     [scores]
@@ -50,32 +66,49 @@ export default function Chart({ lessonId }: ChartProps) {
   const barData = useMemo(
     () => ({
       labels: timeStampDates,
-      datasets: [{ label: "Words per minute", data: results.wpmData }],
+      datasets: [
+        {
+          label: "Words per minute",
+          data: results.wpmData,
+          backgroundColor: "rgba(75, 168, 236, 0.3",
+          hoverBackgroundColor: "rgba(75, 168, 236, 0.6",
+        },
+      ],
     }),
     [scores]
   );
 
-  const options = useMemo(
-    () => ({
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-            },
-          },
-        ],
+  defaults.global.defaultFontFamily = "'Rubik', sans-serif";
+  defaults.global.defaultFontSize = 16;
+  const options = {
+    maintainAspectRatio: false,
+    legend: {
+      labels: {
+        padding: 20,
       },
-    }),
-    []
-  );
+    },
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+            maxTicksLimit: 6,
+          },
+        },
+      ],
+    },
+  };
 
   return (
     <div>
       {user ? (
         <>
-          <Line data={lineData} options={options} />
-          <Bar data={barData} options={options} />
+          <ChartContainer>
+            <Line data={lineData} options={options} />
+          </ChartContainer>
+          <ChartContainer>
+            <Bar data={barData} options={options} />
+          </ChartContainer>
         </>
       ) : (
         <p>Log in to upload your scores</p>
