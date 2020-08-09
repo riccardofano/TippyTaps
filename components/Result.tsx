@@ -1,10 +1,12 @@
 import { useContext, useEffect, Dispatch, useState, useMemo } from "react";
+import styled from "styled-components";
+
+import { querySize } from "../utils/useMedia";
 import {
   StateContext,
   UserContext,
   LessonInfo,
   Actions,
-  IResult,
   IScore,
 } from "../utils/types";
 import {
@@ -17,6 +19,29 @@ import {
 import { addScore } from "../utils/db/collections";
 
 import ProgressRing from "./ProgressRing";
+
+const ResultsContainer = styled.section`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+`;
+
+const RingContainer = styled.div`
+  flex: 1;
+  margin-bottom: 1rem;
+
+  &:first-child {
+    flex: none;
+    width: 100%;
+
+    @media ${querySize.medium} {
+      flex: 1;
+      width: auto;
+    }
+  }
+`;
 
 interface ResultsProps extends LessonInfo {
   dispatch: Dispatch<Actions>;
@@ -76,19 +101,31 @@ export default function Result({
   return (
     <div>
       {result && (
-        <>
-          <ProgressRing progress={progress.wpm} number={result.wpm} large />
-          <ProgressRing
-            progress={progress.accuracy}
-            number={result.accuracy}
-            large
-          />
-          <ProgressRing
-            progress={progress.realAccuracy}
-            number={result.realAccuracy}
-            large
-          />
-        </>
+        <ResultsContainer>
+          <RingContainer>
+            <ProgressRing progress={progress.wpm} number={result.wpm} large />
+            <p>Words per minute</p>
+            <p>out of {requirements.wpm}</p>
+          </RingContainer>
+          <RingContainer>
+            <ProgressRing
+              progress={progress.accuracy}
+              number={result.accuracy}
+              large
+            />
+            <p>Accuracy</p>
+            <p>out of {requirements.accuracy}</p>
+          </RingContainer>
+          <RingContainer>
+            <ProgressRing
+              progress={progress.realAccuracy}
+              number={result.realAccuracy}
+              large
+            />
+            <p>Real accuracy</p>
+            <p>out of {requirements.realAccuracy}</p>
+          </RingContainer>
+        </ResultsContainer>
       )}
     </div>
   );
