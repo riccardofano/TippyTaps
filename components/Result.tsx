@@ -26,20 +26,27 @@ const ResultsContainer = styled.section`
   align-items: center;
   justify-content: space-around;
   text-align: center;
+  margin-top: 3rem;
 `;
 
 const RingContainer = styled.div`
   flex: 1;
   margin-bottom: 1rem;
+  margin-top: -1rem;
 
   &:first-child {
     flex: none;
     width: 100%;
+    margin-top: 0;
 
     @media ${querySize.medium} {
       flex: 1;
       width: auto;
     }
+  }
+
+  @media ${querySize.medium} {
+    margin-top: 0;
   }
 `;
 
