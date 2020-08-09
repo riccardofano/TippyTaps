@@ -129,7 +129,7 @@ export default function Chart({ lessonId }: ChartProps) {
           </ChartContainer>
         </>
       ) : (
-        <p>Log in to upload your scores</p>
+        <p style={{ textAlign: "center" }}>Log in to upload your scores</p>
       )}
     </div>
   );
