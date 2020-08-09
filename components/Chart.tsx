@@ -1,5 +1,6 @@
 import { useMemo, useEffect, useState, useContext } from "react";
 import { Line, Bar, defaults } from "react-chartjs-2";
+import styled from "styled-components";
 
 import dayjs from "dayjs";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
@@ -7,7 +8,7 @@ dayjs.extend(LocalizedFormat);
 
 import { UserContext, IScore, StateContext } from "../utils/types";
 import { getScores } from "../utils/db/collections";
-import styled from "styled-components";
+import { querySize } from "../utils/useMedia";
 
 interface ChartProps {
   lessonId: string;
@@ -15,6 +16,22 @@ interface ChartProps {
 
 const ChartContainer = styled.div`
   height: 300px;
+
+  @media ${querySize.medium} {
+    height: 400px;
+  }
+`;
+
+const SectionHeader = styled.h2`
+  text-align: center;
+  font-size: 24px;
+  font-weight: 400;
+  margin: 2rem 0 1rem;
+
+  @media ${querySize.medium} {
+    font-size: 28px;
+    margin: 3rem 0 1.5rem;
+  }
 `;
 
 export default function Chart({ lessonId }: ChartProps) {
@@ -103,6 +120,7 @@ export default function Chart({ lessonId }: ChartProps) {
     <div>
       {user ? (
         <>
+          <SectionHeader>Previous results</SectionHeader>
           <ChartContainer>
             <Line data={lineData} options={options} />
           </ChartContainer>
