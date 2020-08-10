@@ -37,8 +37,8 @@ const Info = styled.p`
 
 interface LessonCardProps {
   id: string;
-  number: number;
   name: string;
+  position: number;
   wpm: number;
   accuracy: number;
   progress: number;
@@ -46,8 +46,8 @@ interface LessonCardProps {
 
 export default function LessonCard({
   id,
-  number,
   name,
+  position,
   wpm,
   accuracy,
   progress,
@@ -61,7 +61,7 @@ export default function LessonCard({
             {wpm} wpm {accuracy}% accuracy
           </Info>
         </InfoContainer>
-        <ProgressRing progress={progress} number={number} />
+        <ProgressRing progress={progress} number={position} />
       </StyledLessonCard>
     </Link>
   );

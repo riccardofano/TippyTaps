@@ -47,7 +47,7 @@ const TopCircle = styled(BottomCircle).attrs<TopCircleProps>(
 
 interface LessonRingProps {
   progress: number;
-  number: number;
+  number: number | string;
   large?: boolean;
 }
 

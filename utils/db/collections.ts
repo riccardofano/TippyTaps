@@ -12,6 +12,7 @@ export const userCollection = firebase.firestore().collection("users");
 export const getAllLessons = async () => {
   let lessons: AllLessons = [];
   await lessonCollection
+    .orderBy("position", "asc")
     .get()
     .then((snap) => {
       snap.forEach((doc) =>
@@ -20,7 +21,18 @@ export const getAllLessons = async () => {
     })
     .catch((e) => console.error(e));
 
+  console.log(lessons);
   return lessons;
+};
+
+export const groupLessons = (lessons: AllLessons) => {
+  let groups: { [key: string]: LessonInfo[] } = {};
+  for (let lesson of lessons) {
+    groups[lesson.group]
+      ? groups[lesson.group].push(lesson)
+      : (groups[lesson.group] = [lesson]);
+  }
+  return groups;
 };
 
 export const getUserLessons = async (userId: string) => {

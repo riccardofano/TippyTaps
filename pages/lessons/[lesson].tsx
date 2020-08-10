@@ -12,7 +12,7 @@ interface LessonProps {
 }
 type Params = { params: { lesson: string } };
 
-export default function Lesson({ info, initialState, lines }: LessonProps) {
+export default function Lesson({ info, initialState }: LessonProps) {
   return (
     <Layout url={`/lessons/${info.id}`}>
       <LessonGame initialState={initialState} info={info} />
@@ -37,12 +37,11 @@ export async function getStaticProps({ params }: Params) {
   if (!lessonSnap.exists || !lessonSnap.data()) {
     return { props: { lesson: null } };
   }
-  const { id, requirements, text } = lessonSnap.data() as LessonInfo;
-  const info = { id, text, requirements };
+  const info = { ...lessonSnap.data(), id: lessonSnap.id } as LessonInfo;
 
   // TODO: have might have to divide the lines and the state initilization
   // so I can change the line length on media query change without modifying the state
-  const initialState = initializeState(text);
+  const initialState = initializeState(info.text);
 
   return { props: { info, initialState } };
 }

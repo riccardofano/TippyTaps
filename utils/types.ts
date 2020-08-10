@@ -21,7 +21,10 @@ export interface IState {
 
 export interface LessonInfo {
   id: string;
+  position: number;
+  name: string;
   text: string;
+  group: string;
   requirements: {
     wpm: number;
     accuracy: number;
