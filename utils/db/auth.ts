@@ -28,6 +28,7 @@ export const firebaseAuthConfig = (url?: string): firebaseui.auth.Config => {
         };
         cookies.set("auth", userData, {
           expires: 1,
+          secure: true,
         });
         return true;
       },
