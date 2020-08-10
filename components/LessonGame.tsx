@@ -47,6 +47,11 @@ const StartNotice = styled.span`
   animation: ${appearAnimation} 500ms ease-in-out;
 `;
 
+const GameContainer = styled.div`
+  width: max-content;
+  margin: 9rem auto 2rem;
+`;
+
 interface LessonGameProps {
   info: LessonInfo;
   initialState: IState;
@@ -101,7 +106,7 @@ export default function LessonGame({ info, initialState }: LessonGameProps) {
         ) : (
           <>
             {!state.started && <StartNotice>Start typing</StartNotice>}
-            <div style={{ width: "max-content", margin: "9rem auto 0" }}>
+            <GameContainer>
               <ProgressBar
                 length={(state.currentPosition / state.text.length) * 100}
               />
@@ -113,7 +118,7 @@ export default function LessonGame({ info, initialState }: LessonGameProps) {
               <ResetButtonContainer>
                 <Button onClick={handleReset}>Reset</Button>
               </ResetButtonContainer>
-            </div>
+            </GameContainer>
           </>
         )}
       </StateContext.Provider>
