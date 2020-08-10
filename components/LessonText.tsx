@@ -1,7 +1,7 @@
 import { ICharacter } from "../utils/types";
 import { querySize } from "../utils/useMedia";
 import Character from "./Character";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const Container = styled.div`
   margin: 0 auto;
@@ -9,7 +9,8 @@ const Container = styled.div`
   font-size: 22px;
   line-height: 29px;
   color: #000;
-  height: 245px;
+  min-height: max-content;
+  max-height: 245px;
   width: max-content;
   white-space: pre;
   overflow: hidden;
@@ -17,7 +18,7 @@ const Container = styled.div`
   @media ${querySize.medium} {
     font-size: 32px;
     line-height: 47px;
-    height: 335px;
+    max-height: 335px;
   }
 `;
 
