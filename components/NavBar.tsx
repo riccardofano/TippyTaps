@@ -24,13 +24,32 @@ const Background = styled.div<BackgroundProps>`
 
 const Modal = styled.div`
   padding: 2rem;
+  min-width: 300px;
   border-radius: 3px;
   background-color: #fff;
   position: fixed;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
+  text-align: center;
   cursor: auto;
+
+  & h1 {
+    font-size: 24px;
+    margin: 1rem 0;
+
+    @media ${querySize} {
+      font-size: 28px;
+    }
+  }
+
+  & p {
+    font-size: 16px;
+
+    @media ${querySize} {
+      font-size: 18px;
+    }
+  }
 `;
 
 const Logo = styled.a`
@@ -85,7 +104,12 @@ export default function Navbar({ url }: NavbarProps) {
           {open && (
             <Background ref={backgroundRef} onClick={handleClick}>
               <Modal>
-                <p>Sign in</p>
+                <h1>Sign in</h1>
+                <p>
+                  To upload and see all your scores
+                  <br />
+                  and the progress you've made on the lessons!
+                </p>
                 <FirebaseAuth url={url} />
               </Modal>
             </Background>
