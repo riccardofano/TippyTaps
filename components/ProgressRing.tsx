@@ -45,6 +45,16 @@ const TopCircle = styled(BottomCircle).attrs<TopCircleProps>(
   transition: stroke-dashoffset 500ms ease-in;
 `;
 
+const StyledText = styled.text.attrs<{ radius: number }>(({ radius }) => ({
+  x: radius,
+  y: radius * 1.17,
+  alignmentBaseline: "center",
+  textAnchor: "middle",
+}))<{ radius: number }>`
+  fill: ${(props) => props.theme.colors.text.main};
+  font-size: ${(props) => (props.radius === 40 ? "22px" : "36px")};
+`;
+
 interface LessonRingProps {
   progress: number;
   number: number | string;
@@ -100,17 +110,7 @@ export default function LessonRing({
           progress={currentProgress}
         />
       )}
-      <text
-        x={radius}
-        y={radius * 1.17}
-        fill="#000"
-        fontFamily={"Rubik"}
-        fontSize={radius === 40 ? "22px" : "36px"}
-        textAnchor="middle"
-        alignmentBaseline="central"
-      >
-        {number}
-      </text>
+      <StyledText radius={radius}>{number}</StyledText>
       <defs>
         <linearGradient id="gradient">
           <stop offset="0%" stopColor="#4ba8ec" />

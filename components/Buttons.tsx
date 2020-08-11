@@ -2,12 +2,12 @@ import styled from "styled-components";
 import { querySize } from "../utils/useMedia";
 
 export const Button = styled.button`
-  font-size: 16px;
+  font-size: ${(props) => props.theme.fontSize.mobile.main};
   font-weight: 400;
   padding: 0.2rem 1rem;
-  color: #000;
-  background: #fff;
-  border-radius: 20px;
+  color: ${(props) => props.theme.colors.text.main};
+  background: ${(props) => props.theme.colors.foreground};
+  border-radius: ${(props) => props.theme.borderRadius};
   border: none;
   transition: all 100ms ease-in-out;
   transition-property: box-shadow, transform;
@@ -25,12 +25,12 @@ export const Button = styled.button`
 
   @media ${querySize.medium} {
     padding: 0.2rem 3rem;
-    font-size: 20px;
+    font-size: ${(props) => props.theme.fontSize.desktop.main};
   }
 `;
 
 export const HighlightButton = styled(Button)`
-  color: #fff;
+  color: ${(props) => props.theme.colors.text.highlight};
   background: linear-gradient(90deg, #4ba8ec 0%, #0f57c2 100%);
 
   &:focus {

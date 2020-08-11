@@ -42,7 +42,7 @@ const StartNotice = styled.span`
   color: #fff;
   background: linear-gradient(90deg, #4ba8ec 0%, #0f57c2 100%);
   padding: 0.5rem 2rem;
-  border-radius: 20px;
+  border-radius: ${(props) => props.theme.borderRadius};
 
   animation: ${appearAnimation} 500ms ease-in-out;
 `;

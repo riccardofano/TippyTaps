@@ -21,7 +21,6 @@ export const getAllLessons = async () => {
     })
     .catch((e) => console.error(e));
 
-  console.log(lessons);
   return lessons;
 };
 

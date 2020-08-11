@@ -6,6 +6,7 @@ import { UserContext } from "../utils/types";
 import { querySize } from "../utils/useMedia";
 import FirebaseAuth from "./FirebaseAuth";
 import { Button, HighlightButton } from "./Buttons";
+import { ThemeToggle } from "../pages/_app";
 
 interface BackgroundProps {
   onClick: (event: MouseEvent<HTMLDivElement>) => void;
@@ -25,38 +26,40 @@ const Background = styled.div<BackgroundProps>`
 const Modal = styled.div`
   padding: 2rem;
   min-width: 300px;
-  border-radius: 3px;
-  background-color: #fff;
+  border-radius: ${(props) => props.theme.borderRadius};
+  background-color: ${(props) => props.theme.colors.foreground};
+  color: ${(props) => props.theme.colors.text};
   position: fixed;
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
   cursor: auto;
+`;
 
-  & h1 {
-    font-size: 24px;
-    margin: 1rem 0;
+const ModalTitle = styled.h1`
+  font-size: ${(props) => props.theme.fontSize.mobile.h1};
+  font-size: 24px;
+  margin: 1rem 0;
 
-    @media ${querySize} {
-      font-size: 28px;
-    }
+  @media ${querySize.medium} {
+    font-size: ${(props) => props.theme.fontSize.desktop.h1};
   }
+`;
 
-  & p {
-    font-size: 16px;
+const ModalText = styled.p`
+  font-size: ${(props) => props.theme.fontSize.mobile.main};
 
-    @media ${querySize} {
-      font-size: 18px;
-    }
+  @media ${querySize.medium} {
+    font-size: ${(props) => props.theme.fontSize.desktop.main};
   }
 `;
 
 const Logo = styled.a`
-  font-size: 24px;
+  font-size: ${(props) => props.theme.fontSize.mobile.h1};
   font-weight: bold;
   text-decoration: none;
-  color: #000;
+  color: ${(props) => props.theme.colors.text};
   cursor: pointer;
   transition: transform 100ms ease-in;
 
@@ -65,7 +68,7 @@ const Logo = styled.a`
   }
 
   @media ${querySize.medium} {
-    font-size: 28px;
+    font-size: ${(props) => props.theme.fontSize.desktop.h1};
   }
 `;
 
@@ -78,11 +81,11 @@ const StyledNavBar = styled.nav`
 
 interface NavbarProps {
   url?: string;
-  themeToggle: () => void;
 }
 
-export default function Navbar({ url, themeToggle }: NavbarProps) {
+export default function Navbar({ url }: NavbarProps) {
   const { user, logout } = useContext(UserContext);
+  const { toggle } = useContext(ThemeToggle);
   const [open, setOpen] = useState(false);
   const backgroundRef = createRef<HTMLDivElement>();
 
@@ -97,7 +100,7 @@ export default function Navbar({ url, themeToggle }: NavbarProps) {
       <Link href="/">
         <Logo>TippyTaps</Logo>
       </Link>
-      <Button onClick={themeToggle}>Change theme</Button>
+      <Button onClick={toggle}>Change theme</Button>
       {user ? (
         <Button onClick={() => logout()}>Logout</Button>
       ) : (
@@ -106,12 +109,12 @@ export default function Navbar({ url, themeToggle }: NavbarProps) {
           {open && (
             <Background ref={backgroundRef} onClick={handleClick}>
               <Modal>
-                <h1>Sign in</h1>
-                <p>
+                <ModalTitle>Sign in</ModalTitle>
+                <ModalText>
                   To upload and see all your scores
                   <br />
                   and the progress you've made on the lessons!
-                </p>
+                </ModalText>
                 <FirebaseAuth url={url} />
               </Modal>
             </Background>

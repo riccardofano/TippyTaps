@@ -20,12 +20,16 @@ const StyledGroupList = styled.section`
   display: flex;
   flex-direction: column;
   margin-bottom: 3rem;
+`;
 
-  & h1 {
-    text-align: center;
-    font-size: 24px;
-    font-weight: 400;
-    margin-bottom: 1rem;
+const GroupHeader = styled.h1`
+  text-align: center;
+  font-size: ${(props) => props.theme.fontSize.mobile.h1};
+  font-weight: 400;
+  margin-bottom: 1rem;
+
+  @media ${querySize.medium} {
+    font-size: ${(props) => props.theme.fontSize.desktop.h1};
   }
 `;
 
@@ -42,6 +46,8 @@ const StyledLessonList = styled.div`
     grid-template-columns: repeat(3, 1fr);
   }
 `;
+
+// TODO: look up why the lesson list breaks when I press the login button
 
 export default function LessonList() {
   const { user } = useContext(UserContext);
@@ -68,8 +74,8 @@ export default function LessonList() {
       {lessons &&
         groups &&
         Object.keys(groups).map((group) => (
-          <StyledGroupList>
-            <h1>{group}</h1>
+          <StyledGroupList key={group}>
+            <GroupHeader>{group}</GroupHeader>
             <StyledLessonList>
               {groups[group].map((lesson) => (
                 <LessonCard

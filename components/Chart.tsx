@@ -24,12 +24,12 @@ const ChartContainer = styled.div`
 
 const SectionHeader = styled.h2`
   text-align: center;
-  font-size: 24px;
+  font-size: ${(props) => props.theme.fontSize.mobile.h2};
   font-weight: 400;
   margin: 2rem 0 1rem;
 
   @media ${querySize.medium} {
-    font-size: 28px;
+    font-size: ${(props) => props.theme.fontSize.desktop.h2};
     margin: 3rem 0 1.5rem;
   }
 `;
