@@ -1,9 +1,12 @@
 import { useUser } from "../utils/db/useUser";
 import { UserContext } from "../utils/types";
 import { querySize } from "../utils/useMedia";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
+import { GlobalStyles } from "../styles/global";
+import { light, dark } from "../styles/themes";
 
 import Navbar from "./NavBar";
+import { useState } from "react";
 
 const StyledLayout = styled.main`
   margin: 0 auto;
@@ -26,13 +29,20 @@ interface LayoutProps {
 
 export default function Layout({ children, url }: LayoutProps) {
   const { user, logout } = useUser();
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const themeToggle = () => {
+    theme === "light" ? setTheme("dark") : setTheme("light");
+  };
 
   return (
-    <StyledLayout>
-      <UserContext.Provider value={{ user, logout }}>
-        <Navbar url={url} />
-        {children}
-      </UserContext.Provider>
-    </StyledLayout>
+    <ThemeProvider theme={theme === "light" ? light : dark}>
+      <GlobalStyles />
+      <StyledLayout>
+        <UserContext.Provider value={{ user, logout }}>
+          <Navbar url={url} themeToggle={themeToggle} />
+          {children}
+        </UserContext.Provider>
+      </StyledLayout>
+    </ThemeProvider>
   );
 }

@@ -78,9 +78,10 @@ const StyledNavBar = styled.nav`
 
 interface NavbarProps {
   url?: string;
+  themeToggle: () => void;
 }
 
-export default function Navbar({ url }: NavbarProps) {
+export default function Navbar({ url, themeToggle }: NavbarProps) {
   const { user, logout } = useContext(UserContext);
   const [open, setOpen] = useState(false);
   const backgroundRef = createRef<HTMLDivElement>();
@@ -96,6 +97,7 @@ export default function Navbar({ url }: NavbarProps) {
       <Link href="/">
         <Logo>TippyTaps</Logo>
       </Link>
+      <Button onClick={themeToggle}>Change theme</Button>
       {user ? (
         <Button onClick={() => logout()}>Logout</Button>
       ) : (
