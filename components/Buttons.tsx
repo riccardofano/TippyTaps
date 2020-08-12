@@ -31,7 +31,7 @@ export const Button = styled.button`
 
 export const HighlightButton = styled(Button)`
   color: ${(props) => props.theme.colors.text.highlight};
-  background: linear-gradient(90deg, #4ba8ec 0%, #0f57c2 100%);
+  background: ${(props) => props.theme.gradient("90deg")};
 
   &:focus {
     border: solid 2px #fff;

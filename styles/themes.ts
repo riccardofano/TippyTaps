@@ -2,6 +2,8 @@ import { DefaultTheme } from "styled-components";
 
 export const light: DefaultTheme = {
   borderRadius: "20px",
+  gradient: (angle) => `linear-gradient(${angle}, #4ba8ec 0%, #0f57c2 100%)`,
+
   fontSize: {
     mobile: {
       h1: "24px",

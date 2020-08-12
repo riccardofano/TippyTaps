@@ -3,6 +3,8 @@ import "styled-components";
 declare module "styled-components" {
   export interface DefaultTheme {
     borderRadius: string;
+    gradient: (string) => string;
+
     fontSize: {
       mobile: {
         h1: string;

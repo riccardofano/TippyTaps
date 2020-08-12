@@ -16,7 +16,7 @@ const ColorBar = styled.span.attrs<ProgressBarProps>(({ length }) => ({
   top: 0;
   bottom: 0;
   left: 0;
-  background-image: linear-gradient(90deg, #4ba8ec 0%, #0f57c2 100%);
+  background-image: ${(props) => props.theme.gradient("90deg")};
   border-radius: 3px;
 `;
 

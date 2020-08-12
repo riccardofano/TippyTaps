@@ -39,8 +39,8 @@ const StartNotice = styled.span`
   transform: translateX(-50%);
   font-size: 16px;
   text-align: center;
-  color: #fff;
-  background: linear-gradient(90deg, #4ba8ec 0%, #0f57c2 100%);
+  color: ${(props) => props.theme.colors.text.highlight};
+  background: ${(props) => props.theme.gradient("90deg")};
   padding: 0.5rem 2rem;
   border-radius: ${(props) => props.theme.borderRadius};
 
