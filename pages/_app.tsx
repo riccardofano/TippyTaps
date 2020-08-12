@@ -5,7 +5,9 @@ import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "../styles/global";
 import { light, dark } from "../styles/themes";
 
-export const ThemeToggle = createContext({} as { toggle: () => void });
+export const ThemeToggle = createContext(
+  {} as { toggle: () => void; theme: "light" | "dark" }
+);
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -16,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme === "light" ? light : dark}>
       <GlobalStyles />
-      <ThemeToggle.Provider value={{ toggle: toggleTheme }}>
+      <ThemeToggle.Provider value={{ toggle: toggleTheme, theme }}>
         <Component {...pageProps} />
       </ThemeToggle.Provider>
     </ThemeProvider>

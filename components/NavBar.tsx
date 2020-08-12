@@ -1,6 +1,9 @@
 import { useContext, useState, MouseEvent, createRef, RefObject } from "react";
 import Link from "next/link";
 import styled from "styled-components";
+import { InlineIcon } from "@iconify/react";
+import moon from "@iconify/icons-oi/moon";
+import sun from "@iconify/icons-oi/sun";
 
 import { UserContext } from "../utils/types";
 import { querySize } from "../utils/useMedia";
@@ -85,7 +88,8 @@ interface NavbarProps {
 
 export default function Navbar({ url }: NavbarProps) {
   const { user, logout } = useContext(UserContext);
-  const { toggle } = useContext(ThemeToggle);
+  const { toggle, theme } = useContext(ThemeToggle);
+
   const [open, setOpen] = useState(false);
   const backgroundRef = createRef<HTMLDivElement>();
 
@@ -100,26 +104,32 @@ export default function Navbar({ url }: NavbarProps) {
       <Link href="/">
         <Logo>TippyTaps</Logo>
       </Link>
-      <Button onClick={toggle}>Change theme</Button>
-      {user ? (
-        <Button onClick={() => logout()}>Logout</Button>
-      ) : (
-        <>
-          <HighlightButton onClick={() => setOpen(true)}>Login</HighlightButton>
-          {open && (
-            <Background ref={backgroundRef} onClick={handleClick}>
-              <Modal>
-                <ModalTitle>Sign in</ModalTitle>
-                <ModalText>
-                  To upload and see all your scores
-                  <br />
-                  and the progress you've made on the lessons!
-                </ModalText>
-                <FirebaseAuth url={url} />
-              </Modal>
-            </Background>
+      <div>
+        <Button margin onClick={toggle}>
+          {theme === "light" ? (
+            <InlineIcon icon={moon} />
+          ) : (
+            <InlineIcon icon={sun} />
           )}
-        </>
+        </Button>
+        {user ? (
+          <Button onClick={() => logout()}>Logout</Button>
+        ) : (
+          <HighlightButton onClick={() => setOpen(true)}>Login</HighlightButton>
+        )}
+      </div>
+      {open && (
+        <Background ref={backgroundRef} onClick={handleClick}>
+          <Modal>
+            <ModalTitle>Sign in</ModalTitle>
+            <ModalText>
+              To upload and see all your scores
+              <br />
+              and the progress you've made on the lessons!
+            </ModalText>
+            <FirebaseAuth url={url} />
+          </Modal>
+        </Background>
       )}
     </StyledNavBar>
   );

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { querySize } from "../utils/useMedia";
 
-export const Button = styled.button`
+export const Button = styled.button<{ margin?: boolean }>`
   font-size: ${(props) => props.theme.fontSize.mobile.main};
   font-weight: 400;
   padding: 0.2rem 1rem;
@@ -13,6 +13,7 @@ export const Button = styled.button`
   transition-property: box-shadow, transform;
   box-shadow: 0 3px 14px -5px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  margin-right: ${(props) => (props.margin ? "1rem" : "")};
 
   &:hover {
     box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.15);
@@ -24,7 +25,7 @@ export const Button = styled.button`
   }
 
   @media ${querySize.medium} {
-    padding: 0.2rem 3rem;
+    padding: 0.2rem 1.5rem;
     font-size: ${(props) => props.theme.fontSize.desktop.main};
   }
 `;
@@ -35,5 +36,9 @@ export const HighlightButton = styled(Button)`
 
   &:focus {
     border: solid 2px #fff;
+  }
+
+  @media ${querySize.medium} {
+    padding: 0.2rem 3rem;
   }
 `;
