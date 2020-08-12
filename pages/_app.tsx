@@ -1,14 +1,10 @@
 import { AppProps } from "next/app";
-import { createContext, useState, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
+import { ThemeContext } from "../utils/types";
 
 import { GlobalStyles } from "../styles/global";
 import { light, dark } from "../styles/themes";
 import { useDarkMode } from "../utils/useDarkMode";
-
-export const ThemeToggle = createContext(
-  {} as { toggle: () => void; theme: string }
-);
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { theme, toggle } = useDarkMode();
@@ -16,9 +12,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme === "light" ? light : dark}>
       <GlobalStyles />
-      <ThemeToggle.Provider value={{ toggle, theme }}>
+      <ThemeContext.Provider value={{ toggle, theme }}>
         <Component {...pageProps} />
-      </ThemeToggle.Provider>
+      </ThemeContext.Provider>
     </ThemeProvider>
   );
 }

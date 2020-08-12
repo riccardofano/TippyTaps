@@ -64,6 +64,9 @@ export type Actions =
   | { type: "widthChange"; payload: number[] }
   | { type: "reset"; payload: number[] };
 
+export const ThemeContext = createContext(
+  {} as { toggle: () => void; theme: string }
+);
 export const StateContext = createContext({} as IState);
 export const UserContext = createContext({
   user: null,

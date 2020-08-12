@@ -5,11 +5,10 @@ import { InlineIcon } from "@iconify/react";
 import moon from "@iconify/icons-oi/moon";
 import sun from "@iconify/icons-oi/sun";
 
-import { UserContext } from "../utils/types";
+import { UserContext, ThemeContext } from "../utils/types";
 import { querySize } from "../utils/useMedia";
 import FirebaseAuth from "./FirebaseAuth";
 import { Button, HighlightButton } from "./Buttons";
-import { ThemeToggle } from "../pages/_app";
 
 interface BackgroundProps {
   onClick: (event: MouseEvent<HTMLDivElement>) => void;
@@ -88,7 +87,7 @@ interface NavbarProps {
 
 export default function Navbar({ url }: NavbarProps) {
   const { user, logout } = useContext(UserContext);
-  const { toggle, theme } = useContext(ThemeToggle);
+  const { toggle, theme } = useContext(ThemeContext);
 
   const [open, setOpen] = useState(false);
   const backgroundRef = createRef<HTMLDivElement>();
