@@ -19,19 +19,24 @@ const StyledCharacter = styled.span<StyledCharacterProps>`
     currentPosition,
     correct,
     wasIncorrect,
+    theme,
   }) => {
     if (position < currentPosition) {
-      return correct ? (wasIncorrect ? "#ffd78c" : "#86eda9") : "#ff6e6e";
+      return correct
+        ? wasIncorrect
+          ? theme.colors.tiles.fixed
+          : theme.colors.tiles.correct
+        : theme.colors.tiles.incorrect;
     }
     return "transparent";
   }};
 
-  ${({ position, currentPosition }) =>
+  ${({ position, currentPosition, theme }) =>
     position === currentPosition &&
     `
-    border-bottom: 4px solid blue;
+    border-bottom: 4px solid ${theme.colors.tiles.cursor};
     border-radius: 3px 3px 0 0;
-    background-color: rgba(0,0,0,0.05);
+    background-color: ${theme.colors.tiles.current};
   `}
 `;
 
@@ -43,17 +48,6 @@ interface CharacterProps {
 export default function Character({ position, value }: CharacterProps) {
   const { currentPosition, characters } = useContext(StateContext);
   const { correct, wasIncorrect } = characters[position];
-
-  let style = {
-    backgroundColor: correct
-      ? wasIncorrect
-        ? "#ffd78c"
-        : "#86EDA9"
-      : "#ff6e6e",
-  };
-
-  style =
-    currentPosition <= position ? { backgroundColor: "transparent" } : style;
 
   return (
     <StyledCharacter {...{ position, currentPosition, correct, wasIncorrect }}>

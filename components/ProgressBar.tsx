@@ -28,7 +28,7 @@ const Cursor = styled.span.attrs(({ length }: ProgressBarProps) => ({
   width: 6px;
   transform: translateX(-50%);
   height: 6px;
-  background-color: #000;
+  background-color: ${(props) => props.theme.colors.text.main};
   border-radius: 50%;
   z-index: 1;
 `;

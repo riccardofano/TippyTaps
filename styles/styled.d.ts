@@ -23,6 +23,13 @@ declare module "styled-components" {
         main: string;
         highlight: string;
       };
+      tiles: {
+        correct: string;
+        incorrect: string;
+        fixed: string;
+        current: string;
+        cursor: string;
+      };
     };
   }
 }

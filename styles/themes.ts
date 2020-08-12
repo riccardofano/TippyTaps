@@ -22,6 +22,13 @@ export const light: DefaultTheme = {
       main: "#2f2f2f",
       highlight: "#fff",
     },
+    tiles: {
+      correct: "#86eda9",
+      incorrect: "#ff6e6e",
+      fixed: "#ffd78c",
+      current: "rgba(0, 0, 0, 0.05)",
+      cursor: "#4ba8ec",
+    },
   },
 };
 
@@ -34,6 +41,13 @@ export const dark: DefaultTheme = {
     text: {
       main: "#eee",
       highlight: "#fff",
+    },
+    tiles: {
+      correct: "#2ea66c",
+      incorrect: "#b93a3a",
+      fixed: "#ffa857",
+      current: "rgba(0, 0, 0,  0.2)",
+      cursor: light.colors.tiles.cursor,
     },
   },
 };

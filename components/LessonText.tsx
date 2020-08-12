@@ -8,7 +8,7 @@ const Container = styled.div`
   font-family: "Roboto mono", monospace;
   font-size: 22px;
   line-height: 29px;
-  color: #000;
+  color: ${(props) => props.theme.colors.text.main};
   min-height: max-content;
   max-height: 245px;
   width: max-content;
