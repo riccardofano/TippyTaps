@@ -39,6 +39,7 @@ const Title = styled.h2`
 
 const Info = styled.p`
   font-size: ${(props) => props.theme.fontSize.mobile.main};
+  opacity: 0.6;
   margin: 0;
 
   @media ${querySize.medium} {
