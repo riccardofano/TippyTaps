@@ -13,11 +13,12 @@ import Result from "./Result";
 import Chart from "./Chart";
 import ProgressBar from "./ProgressBar";
 import { Button } from "./Buttons";
+import Link from "next/link";
 
-const ResetButtonContainer = styled.div`
+const ButtonsContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin: 2rem;
+  margin: 3rem 0;
 `;
 
 const appearAnimation = keyframes`
@@ -98,9 +99,16 @@ export default function LessonGame({ info, initialState }: LessonGameProps) {
         {state.text.length === state.currentPosition ? (
           <>
             <Result {...info} dispatch={dispatch} />
-            <ResetButtonContainer>
-              <Button onClick={handleReset}>Reset</Button>
-            </ResetButtonContainer>
+            <ButtonsContainer>
+              <Button onClick={handleReset} margin>
+                Reset
+              </Button>
+              <Link href="/lessons">
+                <a>
+                  <Button>Go back to all lessons</Button>
+                </a>
+              </Link>
+            </ButtonsContainer>
             <Chart lessonId={info.id} />
           </>
         ) : (
@@ -115,9 +123,16 @@ export default function LessonGame({ info, initialState }: LessonGameProps) {
                 currentLine={state.currentLine}
                 lineOffset={2}
               />
-              <ResetButtonContainer>
-                <Button onClick={handleReset}>Reset</Button>
-              </ResetButtonContainer>
+              <ButtonsContainer>
+                <Button onClick={handleReset} margin>
+                  Reset
+                </Button>
+                <Link href="/lessons">
+                  <a>
+                    <Button>Go back to all lessons</Button>
+                  </a>
+                </Link>
+              </ButtonsContainer>
             </GameContainer>
           </>
         )}
