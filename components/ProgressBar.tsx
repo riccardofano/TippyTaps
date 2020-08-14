@@ -18,6 +18,7 @@ const ColorBar = styled.span.attrs<ProgressBarProps>(({ length }) => ({
   left: 0;
   background-image: ${(props) => props.theme.gradient("90deg")};
   border-radius: 3px;
+  transition: width ease-in 100ms;
 `;
 
 const Cursor = styled.span.attrs(({ length }: ProgressBarProps) => ({
@@ -31,6 +32,7 @@ const Cursor = styled.span.attrs(({ length }: ProgressBarProps) => ({
   background-color: ${(props) => props.theme.colors.text.main};
   border-radius: 50%;
   z-index: 1;
+  transition: left ease-in 100ms;
 `;
 
 interface ProgressBarProps {
