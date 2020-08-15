@@ -32,7 +32,7 @@ const TopCircle = styled(BottomCircle).attrs<TopCircleProps>(
   ({ offset, normalizedRadius, radius }) => ({
     // increase the offset a bit because it
     // would otherwise look like the ring was complete
-    style: { strokeDashoffset: offset + 5 },
+    style: { strokeDashoffset: offset + 3 },
     r: normalizedRadius,
     cx: radius,
     cy: radius,
