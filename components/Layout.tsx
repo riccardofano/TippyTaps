@@ -9,11 +9,11 @@ const StyledLayout = styled.main`
   margin: 0 auto;
   padding: 0 35px;
 
-  @media (${querySize.medium}) {
+  @media ${querySize.medium} {
     padding: 0 4rem;
   }
 
-  @media (${querySize.large}) {
+  @media ${querySize.large} {
     max-width: 1160px;
     padding: 0;
   }
