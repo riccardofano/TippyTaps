@@ -8,7 +8,7 @@ const InfoContainer = styled.div`
   flex-direction: column;
 `;
 
-const StyledLessonCard = styled.div`
+const StyledLessonCard = styled.a`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16,6 +16,7 @@ const StyledLessonCard = styled.div`
   border-radius: ${(props) => props.theme.borderRadius};
   background: ${(props) => props.theme.colors.foreground};
   color: ${(props) => props.theme.colors.text.main};
+  text-decoration: none;
   box-shadow: 0 3px 14px -5px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   transition: all 200ms ease-in-out;
@@ -24,6 +25,14 @@ const StyledLessonCard = styled.div`
   &:hover {
     box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.15);
     transform: translateY(-3px);
+  }
+
+  &:focus {
+    border: solid 2px #4ba8ec;
+  }
+
+  &:focus-within {
+    outline: none;
   }
 `;
 
@@ -65,8 +74,8 @@ export default function LessonCard({
   progress,
 }: LessonCardProps) {
   return (
-    <Link href="/lessons/[lesson]" as={`/lessons/${id}`}>
-      <StyledLessonCard>
+    <Link href="/lessons/[lesson]" as={`/lessons/${id}`} passHref>
+      <StyledLessonCard tabIndex={0}>
         <InfoContainer>
           <Title>{name}</Title>
           <Info>
