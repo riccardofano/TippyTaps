@@ -14,7 +14,21 @@ import {
 } from "../utils/db/collections";
 
 import LessonCard from "./LessonCard";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+import { Icon } from "@iconify/react";
+import reload from "@iconify/icons-oi/reload";
+
+const rotate = keyframes`
+  from { transform: rotate(0)}
+  to {transform: rotate(360deg)}
+`;
+
+const LoadingIcon = styled(Icon)`
+  font-size: 2rem;
+  display: block;
+  margin: 2rem auto 0;
+  animation: ${rotate} 500ms infinite;
+`;
 
 const StyledGroupList = styled.section`
   display: flex;
@@ -47,10 +61,9 @@ const StyledLessonList = styled.div`
   }
 `;
 
-// TODO: look up why the lesson list breaks when I press the login button
-
 export default function LessonList() {
   const { user } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
 
   const [lessons, setLessons] = useState<AllLessons>([]);
   const [userLessons, setUserLessons] = useState<UserLessons>({});
@@ -60,6 +73,7 @@ export default function LessonList() {
     getAllLessons().then((data) => {
       setLessons(data);
       setGroups(groupLessons(data));
+      setLoading(false);
     });
 
     if (user) {
@@ -71,7 +85,10 @@ export default function LessonList() {
 
   return (
     <>
-      {lessons &&
+      {loading ? (
+        <LoadingIcon icon={reload} />
+      ) : (
+        lessons &&
         groups &&
         Object.keys(groups).map((group) => (
           <StyledGroupList key={group}>
@@ -94,7 +111,8 @@ export default function LessonList() {
               ))}
             </StyledLessonList>
           </StyledGroupList>
-        ))}
+        ))
+      )}
     </>
   );
 }
