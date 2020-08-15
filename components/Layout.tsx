@@ -10,9 +10,9 @@ const StyledLayout = styled.main`
   padding: 0 35px;
 
   @media (${querySize.medium}) {
-    max-width: 768px;
-    padding: 0;
+    padding: 0 4rem;
   }
+
   @media (${querySize.large}) {
     max-width: 1160px;
     padding: 0;
