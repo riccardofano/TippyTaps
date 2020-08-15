@@ -12,7 +12,8 @@ const StyledLessonCard = styled.a`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.3rem 1rem;
+  height: 6em;
+  padding: 0 1rem;
   border-radius: ${(props) => props.theme.borderRadius};
   background: ${(props) => props.theme.colors.foreground};
   color: ${(props) => props.theme.colors.text.main};
