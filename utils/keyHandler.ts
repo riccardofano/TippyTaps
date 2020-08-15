@@ -3,31 +3,19 @@ import { Actions } from "./types";
 
 const ignoredKeys = [
   "AltGraph",
-  "CapsLock",
-  "Dead",
-  "Fn",
-  "FnLock",
-  "Hyper",
-  "Meta",
-  "NumLock",
-  "OS",
-  "ScrollLock",
-  "Shift",
-  "Super",
-  "Symbol",
-  "SymbolLock",
-  "Unidentified",
   "ArrowDown",
   "ArrowLeft",
   "ArrowRight",
   "ArrowUp",
+  "CapsLock",
+  "Dead",
   "End",
-  "Home",
-  "PageDown",
-  "PageUp",
   "Esc",
   "Escape",
   "F1",
+  "F10",
+  "F11",
+  "F12",
   "F2",
   "F3",
   "F4",
@@ -36,9 +24,22 @@ const ignoredKeys = [
   "F7",
   "F8",
   "F9",
-  "F10",
-  "F11",
-  "F12",
+  "Fn",
+  "FnLock",
+  "Home",
+  "Hyper",
+  "Meta",
+  "NumLock",
+  "OS",
+  "PageDown",
+  "PageUp",
+  "ScrollLock",
+  "Shift",
+  "Super",
+  "Symbol",
+  "SymbolLock",
+  "Tab",
+  "Unidentified",
 ];
 
 export const keyHandler = (e: KeyboardEvent, dispatch: Dispatch<Actions>) => {
@@ -53,10 +54,6 @@ export const keyHandler = (e: KeyboardEvent, dispatch: Dispatch<Actions>) => {
     switch (e.key) {
       case "Enter": {
         dispatch({ type: "keydown", payload: "\n" });
-        break;
-      }
-      case "Tab": {
-        dispatch({ type: "keydown", payload: "\t" });
         break;
       }
       default: {
