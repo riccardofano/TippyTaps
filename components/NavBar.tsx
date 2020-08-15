@@ -23,6 +23,7 @@ const Background = styled.div<BackgroundProps>`
   bottom: 0;
   left: 0;
   cursor: pointer;
+  z-index: 1;
 `;
 
 const Modal = styled.div`
@@ -37,6 +38,7 @@ const Modal = styled.div`
   transform: translate(-50%, -50%);
   text-align: center;
   cursor: auto;
+  z-index: 2;
 `;
 
 const ModalTitle = styled.h1`
