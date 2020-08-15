@@ -4,7 +4,9 @@ import { querySize } from "../utils/useMedia";
 export const Button = styled.button<{ margin?: boolean }>`
   font-size: ${(props) => props.theme.fontSize.mobile.main};
   font-weight: 400;
-  padding: 0.2rem 1rem;
+  height: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
   color: ${(props) => props.theme.colors.text.main};
   background: ${(props) => props.theme.colors.foreground};
   border-radius: ${(props) => props.theme.borderRadius};
@@ -24,8 +26,11 @@ export const Button = styled.button<{ margin?: boolean }>`
     border: solid 2px #4ba8ec;
   }
 
+  &:focus-within {
+    outline: none;
+  }
+
   @media ${querySize.medium} {
-    padding: 0.2rem 1.5rem;
     font-size: ${(props) => props.theme.fontSize.desktop.main};
   }
 `;
@@ -35,10 +40,11 @@ export const HighlightButton = styled(Button)`
   background: ${(props) => props.theme.gradient("90deg")};
 
   &:focus {
-    border: solid 2px #fff;
+    border: solid 2px ${(props) => props.theme.colors.text.main};
   }
 
   @media ${querySize.medium} {
-    padding: 0.2rem 3rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
   }
 `;

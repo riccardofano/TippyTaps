@@ -101,12 +101,10 @@ export default function LessonGame({ info, initialState }: LessonGameProps) {
             <Result {...info} dispatch={dispatch} />
             <ButtonsContainer>
               <Button onClick={handleReset} margin>
-                Reset
+                Try again
               </Button>
-              <Link href="/lessons">
-                <a>
-                  <Button>Go back to all lessons</Button>
-                </a>
+              <Link href="/lessons" passHref>
+                <Button>Go back to all lessons</Button>
               </Link>
             </ButtonsContainer>
             <Chart lessonId={info.id} />
@@ -127,10 +125,8 @@ export default function LessonGame({ info, initialState }: LessonGameProps) {
                 <Button onClick={handleReset} margin>
                   Reset
                 </Button>
-                <Link href="/lessons">
-                  <a>
-                    <Button>Go back to all lessons</Button>
-                  </a>
+                <Link href="/lessons" passHref>
+                  <Button>Go back to all lessons</Button>
                 </Link>
               </ButtonsContainer>
             </GameContainer>
