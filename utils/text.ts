@@ -12,7 +12,10 @@ export const buildLines = (
 
   while (length < charArray.length) {
     // the length is over the character limit and it's between words
-    if (length >= limit && charArray[length].value === " ") {
+    if (
+      (length >= limit && charArray[length].value === " ") ||
+      charArray[length].value === "\n"
+    ) {
       // add the characters you've seen
       lines.push(charArray.splice(0, length + 1));
       totalLength += length + 1;

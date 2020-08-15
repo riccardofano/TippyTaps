@@ -1,6 +1,14 @@
 import { useContext } from "react";
 import { StateContext } from "../utils/types";
 import styled from "styled-components";
+import { InlineIcon } from "@iconify/react";
+import share from "@iconify/icons-oi/share";
+
+const EnterIcon = styled(InlineIcon)`
+  font-size: 0.8em;
+  padding: 2px 1px;
+  transform: rotate(180deg) !important;
+`;
 
 interface StyledCharacterProps {
   position: number;
@@ -51,7 +59,7 @@ export default function Character({ position, value }: CharacterProps) {
 
   return (
     <StyledCharacter {...{ position, currentPosition, correct, wasIncorrect }}>
-      {value}
+      {value === "\n" ? <EnterIcon icon={share} /> : value}
     </StyledCharacter>
   );
 }
