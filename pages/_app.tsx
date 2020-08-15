@@ -6,6 +6,16 @@ import { GlobalStyles } from "../styles/global";
 import { light, dark } from "../styles/themes";
 import { useDarkMode } from "../utils/useDarkMode";
 
+import { Router } from "next/router";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
+
+NProgress.configure({ showSpinner: false });
+
+Router.events.on("routeChangeStart", () => NProgress.start());
+Router.events.on("routeChangeComplete", () => NProgress.done());
+Router.events.on("routeChangeError", () => NProgress.done());
+
 function MyApp({ Component, pageProps }: AppProps) {
   const { theme, toggle } = useDarkMode();
 
