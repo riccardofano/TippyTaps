@@ -29,10 +29,11 @@ interface TopCircleProps extends BottomCircleProps {
 }
 
 const TopCircle = styled(BottomCircle).attrs<TopCircleProps>(
-  ({ offset, normalizedRadius, radius }) => ({
+  ({ offset, normalizedRadius, radius, progress }) => ({
     // increase the offset a bit because it
     // would otherwise look like the ring was complete
-    style: { strokeDashoffset: offset + 3 },
+    // unless it's completed
+    style: { strokeDashoffset: progress === 100 ? offset : offset + 7 },
     r: normalizedRadius,
     cx: radius,
     cy: radius,
