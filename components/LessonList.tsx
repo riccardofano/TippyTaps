@@ -1,34 +1,12 @@
 import { useEffect, useState, useContext } from "react";
 
-import {
-  AllLessons,
-  UserLessons,
-  UserContext,
-  LessonInfo,
-} from "../utils/types";
+import { UserLessons, UserContext } from "../utils/types";
+import { LessonsProps } from "../pages/lessons/index";
 import { querySize } from "../utils/useMedia";
-import {
-  getUserLessons,
-  getAllLessons,
-  groupLessons,
-} from "../utils/db/collections";
+import { getUserLessons } from "../utils/db/collections";
 
 import LessonCard from "./LessonCard";
-import styled, { keyframes } from "styled-components";
-import { Icon } from "@iconify/react";
-import reload from "@iconify/icons-oi/reload";
-
-const rotate = keyframes`
-  from { transform: rotate(0)}
-  to {transform: rotate(360deg)}
-`;
-
-const LoadingIcon = styled(Icon)`
-  font-size: 2rem;
-  display: block;
-  margin: 2rem auto 0;
-  animation: ${rotate} 500ms infinite;
-`;
+import styled from "styled-components";
 
 const StyledGroupList = styled.section`
   display: flex;
@@ -61,21 +39,11 @@ const StyledLessonList = styled.div`
   }
 `;
 
-export default function LessonList() {
+export default function LessonList({ groups }: LessonsProps) {
   const { user } = useContext(UserContext);
-  const [loading, setLoading] = useState(true);
-
-  const [lessons, setLessons] = useState<AllLessons>([]);
   const [userLessons, setUserLessons] = useState<UserLessons>({});
-  const [groups, setGroups] = useState<{ [key: string]: LessonInfo[] }>();
 
   useEffect(() => {
-    getAllLessons().then((data) => {
-      setLessons(data);
-      setGroups(groupLessons(data));
-      setLoading(false);
-    });
-
     if (user) {
       getUserLessons(user.id).then((data) => setUserLessons(data));
     } else {
@@ -85,34 +53,28 @@ export default function LessonList() {
 
   return (
     <>
-      {loading ? (
-        <LoadingIcon icon={reload} />
-      ) : (
-        lessons &&
-        groups &&
-        Object.keys(groups).map((group) => (
-          <StyledGroupList key={group}>
-            <GroupHeader>{group}</GroupHeader>
-            <StyledLessonList>
-              {groups[group].map((lesson) => (
-                <LessonCard
-                  key={lesson.position}
-                  id={lesson.id}
-                  position={lesson.position}
-                  name={lesson.name}
-                  wpm={lesson.requirements.wpm}
-                  accuracy={lesson.requirements.accuracy}
-                  progress={
-                    userLessons[lesson.id] && userLessons[lesson.id].progress
-                      ? userLessons[lesson.id].progress
-                      : 0
-                  }
-                />
-              ))}
-            </StyledLessonList>
-          </StyledGroupList>
-        ))
-      )}
+      {Object.keys(groups).map((group) => (
+        <StyledGroupList key={group}>
+          <GroupHeader>{group}</GroupHeader>
+          <StyledLessonList>
+            {groups[group].map((lesson) => (
+              <LessonCard
+                key={lesson.position}
+                id={lesson.id}
+                position={lesson.position}
+                name={lesson.name}
+                wpm={lesson.requirements.wpm}
+                accuracy={lesson.requirements.accuracy}
+                progress={
+                  userLessons[lesson.id] && userLessons[lesson.id].progress
+                    ? userLessons[lesson.id].progress
+                    : 0
+                }
+              />
+            ))}
+          </StyledLessonList>
+        </StyledGroupList>
+      ))}
     </>
   );
 }
