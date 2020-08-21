@@ -69,12 +69,16 @@ export default function Chart({ lessonId }: ChartProps) {
         data: results.accuracyData,
         borderColor: "rgba(15, 87, 194, 0.6)",
         backgroundColor: "rgba(75, 168, 236, 0.3)",
+        pointRadius: 5,
+        pointHoverRadius: 7,
       },
       {
         label: "Real Accuracy",
         data: results.realAccuracyData,
         borderColor: "rgba(15, 87, 194, 0.6)",
         backgroundColor: "rgba(75, 168, 236, 0.3)",
+        pointRadius: 5,
+        pointHoverRadius: 7,
       },
     ],
   };
