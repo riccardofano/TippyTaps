@@ -1,6 +1,6 @@
-import { useMemo, useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Line, Bar, defaults } from "react-chartjs-2";
-import styled from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 
 import dayjs from "dayjs";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
@@ -37,6 +37,7 @@ const SectionHeader = styled.h2`
 export default function Chart({ lessonId }: ChartProps) {
   const { user } = useContext(UserContext);
   const { uploaded } = useContext(StateContext);
+  const theme = useContext(ThemeContext);
   const [scores, setScores] = useState<IScore[]>([]);
 
   useEffect(() => {
@@ -59,44 +60,41 @@ export default function Chart({ lessonId }: ChartProps) {
     dayjs(time).format("LT")
   );
 
-  const lineData = useMemo(
-    () => ({
-      labels: timeStampDates,
-      datasets: [
-        {
-          label: "Accuracy",
-          data: results.accuracyData,
-          borderColor: "rgba(15, 87, 194, 0.6)",
-          backgroundColor: "rgba(75, 168, 236, 0.3)",
-        },
-        {
-          label: "Real Accuracy",
-          data: results.realAccuracyData,
-          borderColor: "rgba(15, 87, 194, 0.6)",
-          backgroundColor: "rgba(75, 168, 236, 0.3)",
-        },
-      ],
-    }),
-    [scores]
-  );
+  const lineData = {
+    labels: timeStampDates,
+    scaleFontColor: "#fff",
+    datasets: [
+      {
+        label: "Accuracy",
+        data: results.accuracyData,
+        borderColor: "rgba(15, 87, 194, 0.6)",
+        backgroundColor: "rgba(75, 168, 236, 0.3)",
+      },
+      {
+        label: "Real Accuracy",
+        data: results.realAccuracyData,
+        borderColor: "rgba(15, 87, 194, 0.6)",
+        backgroundColor: "rgba(75, 168, 236, 0.3)",
+      },
+    ],
+  };
 
-  const barData = useMemo(
-    () => ({
-      labels: timeStampDates,
-      datasets: [
-        {
-          label: "Words per minute",
-          data: results.wpmData,
-          backgroundColor: "rgba(75, 168, 236, 0.3",
-          hoverBackgroundColor: "rgba(75, 168, 236, 0.6",
-        },
-      ],
-    }),
-    [scores]
-  );
+  const barData = {
+    labels: timeStampDates,
+    datasets: [
+      {
+        label: "Words per minute",
+        data: results.wpmData,
+        backgroundColor: "rgba(75, 168, 236, 0.3",
+        hoverBackgroundColor: "rgba(75, 168, 236, 0.6",
+      },
+    ],
+  };
 
   defaults.global.defaultFontFamily = "'Rubik', sans-serif";
   defaults.global.defaultFontSize = 16;
+  defaults.global.defaultFontColor = theme.colors.text.main;
+
   const options = {
     maintainAspectRatio: false,
     legend: {
@@ -122,10 +120,10 @@ export default function Chart({ lessonId }: ChartProps) {
         <>
           <SectionHeader>Previous results</SectionHeader>
           <ChartContainer>
-            <Line data={lineData} options={options} />
+            <Line data={lineData} options={options} redraw />
           </ChartContainer>
           <ChartContainer>
-            <Bar data={barData} options={options} />
+            <Bar data={barData} options={options} redraw />
           </ChartContainer>
         </>
       ) : (
