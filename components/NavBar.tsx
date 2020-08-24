@@ -51,13 +51,15 @@ export default function Navbar({ url }: NavbarProps) {
         <Logo>TippyTaps</Logo>
       </Link>
       <div>
-        <Button margin onClick={toggle}>
-          {theme === "light" ? (
+        {theme === "light" ? (
+          <Button margin onClick={toggle} aria-label="Switch to light theme">
             <InlineIcon icon={moon} />
-          ) : (
+          </Button>
+        ) : (
+          <Button margin onClick={toggle} aria-label="Switch to dark theme">
             <InlineIcon icon={sun} />
-          )}
-        </Button>
+          </Button>
+        )}
         {user ? (
           <Button onClick={() => logout()}>Logout</Button>
         ) : (
