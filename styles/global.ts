@@ -7,24 +7,29 @@ export const GlobalStyles = createGlobalStyle`
   @font-face {
     font-family: "Rubik";
     font-weight: 400;
-    src: url("fonts/Rubik-Regular.ttf");
+    src: url("/fonts/Rubik-Regular.ttf");
+    font-display: fallback;
   }
 
   @font-face {
     font-family: "Rubik";
     font-weight: 700;
-    src: url("fonts/Rubik-Bold.ttf");
+    src: url("/fonts/Rubik-Bold.ttf");
+    font-display: fallback;
   }
 
   @font-face {
     font-family: "Rubik";
     font-weight: 300;
-    src: url("fonts/Rubik-Light.ttf");
+    src: url("/fonts/Rubik-Light.ttf");
+    font-display: fallback;
   }
 
   @font-face {
-    font-family: "Roboto Mono";
-    src: url("fonts/RobotoMono-Regular.ttf");
+    font-family: "Roboto mono", monospace;
+    font-weight: 400;
+    src: url("/fonts/RobotoMono-Regular.ttf");
+    font-display: fallback;
   }
 
   body {
