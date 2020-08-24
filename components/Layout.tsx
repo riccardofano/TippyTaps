@@ -33,6 +33,11 @@ export default function Layout({ children, url, title }: LayoutProps) {
   return (
     <StyledLayout>
       <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          name="description"
+          content="Improve your typing skills with a ton of free lessons."
+        />
         <title>{title}</title>
       </Head>
       <UserContext.Provider value={{ user, logout }}>
