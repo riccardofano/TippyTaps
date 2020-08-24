@@ -1,9 +1,10 @@
 import Layout from "../components/Layout";
+import HomeContainer from "../components/HomeContainer";
 
 export default function Home() {
   return (
-    <div>
-      <Layout url="/">Home page</Layout>
-    </div>
+    <Layout url="/lessons">
+      <HomeContainer />
+    </Layout>
   );
 }
