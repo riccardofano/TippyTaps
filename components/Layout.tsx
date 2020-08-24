@@ -1,7 +1,9 @@
+import Head from "next/head";
+import styled from "styled-components";
+
 import { useUser } from "../utils/db/useUser";
 import { UserContext } from "../utils/types";
 import { querySize } from "../utils/useMedia";
-import styled from "styled-components";
 
 import Navbar from "./NavBar";
 
@@ -22,13 +24,17 @@ const StyledLayout = styled.main`
 interface LayoutProps {
   children: React.ReactNode;
   url?: string;
+  title: string;
 }
 
-export default function Layout({ children, url }: LayoutProps) {
+export default function Layout({ children, url, title }: LayoutProps) {
   const { user, logout } = useUser();
 
   return (
     <StyledLayout>
+      <Head>
+        <title>{title}</title>
+      </Head>
       <UserContext.Provider value={{ user, logout }}>
         <Navbar url={url} />
         {children}

@@ -14,7 +14,7 @@ type Params = { params: { lesson: string } };
 
 export default function Lesson({ info, initialState }: LessonProps) {
   return (
-    <Layout url={`/lessons/${info.id}`}>
+    <Layout title={`${info.name} | TippyTaps`} url={`/lessons/${info.id}`}>
       <LessonGame initialState={initialState} info={info} />
     </Layout>
   );

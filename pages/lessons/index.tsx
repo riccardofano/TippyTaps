@@ -9,7 +9,7 @@ export interface LessonsProps {
 }
 export default function Lessons({ groups }: LessonsProps) {
   return (
-    <Layout url="/lessons">
+    <Layout title="Lessons | TippyTaps" url="/lessons">
       <LessonList groups={groups} />
     </Layout>
   );

@@ -3,7 +3,7 @@ import HomeContainer from "../components/HomeContainer";
 
 export default function Home() {
   return (
-    <Layout url="/lessons">
+    <Layout title="TippyTaps" url="/lessons">
       <HomeContainer />
     </Layout>
   );
