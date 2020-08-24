@@ -37,7 +37,7 @@ const StyledHomeContainer = styled.section`
     bottom: 0;
     left: 0;
     right: 0;
-    background-image: url("hero.jpg");
+    background-image: url("/hero.jpg");
     background-position: center;
     background-size: cover;
     z-index: -2;
