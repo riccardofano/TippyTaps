@@ -36,5 +36,6 @@ export const GlobalStyles = createGlobalStyle`
     background: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text.main};
     font-family: "Rubik", sans-serif;
+    min-height: 100vh;
   }
 `;

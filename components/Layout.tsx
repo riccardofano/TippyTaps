@@ -1,11 +1,12 @@
 import Head from "next/head";
-import styled from "styled-components";
+import styled, { ThemeConsumer, ThemeContext } from "styled-components";
 
 import { useUser } from "../utils/db/useUser";
 import { UserContext } from "../utils/types";
 import { querySize } from "../utils/useMedia";
 
 import Navbar from "./NavBar";
+import { useContext } from "react";
 
 const StyledLayout = styled.main`
   margin: 0 auto;
@@ -29,6 +30,7 @@ interface LayoutProps {
 
 export default function Layout({ children, url, title }: LayoutProps) {
   const { user, logout } = useUser();
+  const theme = useContext(ThemeContext);
 
   return (
     <StyledLayout>
@@ -38,6 +40,7 @@ export default function Layout({ children, url, title }: LayoutProps) {
           name="description"
           content="Improve your typing skills with a ton of free lessons."
         />
+        <meta name="theme-color" content={theme.colors.foreground} />
         <title>{title}</title>
       </Head>
       <UserContext.Provider value={{ user, logout }}>

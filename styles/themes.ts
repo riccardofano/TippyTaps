@@ -18,7 +18,7 @@ export const light: DefaultTheme = {
   },
 
   colors: {
-    background: "#f0f0f0",
+    background: "linear-gradient(45deg, #d5d5d5, #f0f0f0)",
     foreground: "#fff",
     text: {
       main: "#2f2f2f",
@@ -38,8 +38,8 @@ export const dark: DefaultTheme = {
   ...light,
 
   colors: {
-    background: "#222e39",
-    foreground: "#2c4257",
+    background: "linear-gradient(45deg, #1E2D3C, #12304D)",
+    foreground: "#1D3C59",
     text: {
       main: "#eee",
       highlight: "#fff",
