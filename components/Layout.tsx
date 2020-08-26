@@ -11,6 +11,9 @@ import { useContext } from "react";
 const StyledLayout = styled.main`
   margin: 0 auto;
   padding: 0 35px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 
   @media ${querySize.medium} {
     padding: 0 4rem;
@@ -20,6 +23,10 @@ const StyledLayout = styled.main`
     max-width: 1160px;
     padding: 0;
   }
+`;
+
+const Content = styled.div`
+  flex: 1;
 `;
 
 interface LayoutProps {
@@ -45,7 +52,7 @@ export default function Layout({ children, url, title }: LayoutProps) {
       </Head>
       <UserContext.Provider value={{ user, logout }}>
         <Navbar url={url} />
-        {children}
+        <Content>{children}</Content>
       </UserContext.Provider>
     </StyledLayout>
   );
