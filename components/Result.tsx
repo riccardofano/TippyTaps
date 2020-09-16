@@ -1,4 +1,4 @@
-import { useContext, useEffect, Dispatch, useState, useMemo } from "react";
+import { useContext, useEffect, Dispatch, useMemo } from "react";
 import styled from "styled-components";
 
 import { querySize } from "../utils/useMedia";
@@ -76,7 +76,6 @@ export default function Result({
   );
 
   const progress = useMemo(() => {
-    // This is so dumb
     const wpmPercent = result.wpm / requirements.wpm;
     const accuracyPercent = result.accuracy / requirements.accuracy;
     const realAccuracyPercent = result.realAccuracy / requirements.realAccuracy;

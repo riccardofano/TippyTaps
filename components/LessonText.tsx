@@ -1,7 +1,7 @@
 import { ICharacter } from "../utils/types";
 import { querySize } from "../utils/useMedia";
 import Character from "./Character";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
 const Container = styled.div`
   margin: 0 auto;

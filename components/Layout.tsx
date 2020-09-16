@@ -1,5 +1,5 @@
 import Head from "next/head";
-import styled, { ThemeConsumer, ThemeContext } from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 
 import { useUser } from "../utils/db/useUser";
 import { UserContext } from "../utils/types";
